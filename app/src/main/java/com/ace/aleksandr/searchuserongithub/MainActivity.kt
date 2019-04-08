@@ -1,53 +1,46 @@
 package com.ace.aleksandr.searchuserongithub
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import com.ace.aleksandr.searchuserongithub.data.ApiHolder
+import com.ace.aleksandr.searchuserongithub.data.ApiHolder.service
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
-class MainActivity : AppCompatActivity() {
-    val BASE_URL = "https://api.github.com"
+class MainActivity : AppCompatActivity(), ListAdapter.OnItemClickListener {
+
+
     var responseQuantity: Int? = null
-    var responseName: String? = null
-    var responseLocation: String? = null
-    var responseListOfRepos: String? = null
+    var listOf = mutableListOf<String>()
     lateinit var editText: EditText
-    lateinit var textV: TextView
-    lateinit var tvAboutUser: TextView
-    lateinit var tvListOfRepos: TextView
-
+    lateinit var tvQuantity: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        textV = textView
-        tvAboutUser = findViewById(R.id.tvAboutUser)
+        tvQuantity = findViewById(R.id.tvQuantity)
         editText = findViewById(R.id.editText)
-        tvListOfRepos = findViewById(R.id.tvListOfRepos)
-
+        rvList.layoutManager = LinearLayoutManager(this)
         button.setOnClickListener {
             getnfo()
+
         }
     }
 
     internal fun getnfo() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        val service = retrofit.create(GitApiInterface::class.java)
-        val call: Call<GithubUserInfo> = service.getUserInfo(editText.text.toString())
-        val call2: Call<GithubUser> = service.getUser(editText.text.toString())
-        val call3: Call<GetUserRepos> = service.getUserRepos(editText.text.toString())
-
+        val call: Call<GithubUserInfo> = ApiHolder.service.getUserInfo(editText.text.toString())
+        //val call2: Call<GithubUser> = ApiHolder.service.getUser(editText.text.toString())
+        //val call3: Call<GetUserRepos> = ApiHolder.service.getUserRepos(editText.text.toString())
 
 
         call.enqueue(object : Callback<GithubUserInfo> {
@@ -55,41 +48,24 @@ class MainActivity : AppCompatActivity() {
                 if (response.code() == 200) {
                     val userInfo = response.body()
                     responseQuantity = userInfo!!.total_count
-                    textV.text = "Найдено " + responseQuantity!! + " пользователей"
+                    userInfo.items.map {
+                        listOf.add(it.login)
+                    }
 
+                    tvQuantity.text = "Найдено " + responseQuantity!! + " пользователей"
+                    rvList.adapter = ListAdapter(this@MainActivity, listOf, this@MainActivity)
                 }
             }
 
             override fun onFailure(call: Call<GithubUserInfo>, t: Throwable) {
             }
         })
-        call2.enqueue(object : Callback<GithubUser> {
-            override fun onResponse(call: Call<GithubUser>, response: Response<GithubUser>) {
-                if (response.code() == 200) {
-                    val userInfo = response.body()
-                    responseName = userInfo!!.name
-                    responseLocation = userInfo!!.location
-                    tvAboutUser.text = "Имя пользователя " + responseName!! + " из города " + responseLocation
-                }
-            }
+    }
 
-            override fun onFailure(call: Call<GithubUser>, t: Throwable) {
-            }
-
-        })
-        call3.enqueue(object : Callback<GetUserRepos> {
-            override fun onResponse(call: Call<GetUserRepos>, response: Response<GetUserRepos>) {
-                if (response.code() == 200) {
-                    val userInfo = response.body()
-                    responseListOfRepos = userInfo!!.name
-                    tvListOfRepos.text = "Имя репозитория " + responseListOfRepos!!
-                }
-            }
-
-            override fun onFailure(call: Call<GetUserRepos>, t: Throwable) {
-            }
-
-        })
+    override fun onItemClick(view: View, position: Int) {
+        val intent = Intent(this, ReposActivity::class.java)
+        intent.putExtra("login", listOf[position])
+        startActivity(intent)
     }
 }
 
