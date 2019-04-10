@@ -1,22 +1,23 @@
-package com.ace.aleksandr.searchuserongithub
+package com.ace.aleksandr.searchuserongithub.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import com.ace.aleksandr.searchuserongithub.data.ApiHolder
-import com.ace.aleksandr.searchuserongithub.data.ApiHolder.service
+import com.ace.aleksandr.searchuserongithub.R
+import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
+import com.ace.aleksandr.searchuserongithub.model.GithubUserInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class MainActivity : AppCompatActivity(), ListAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(),
+    UserAndReposAdapter.OnItemClickListener {
 
 
     var responseQuantity: Int? = null
@@ -31,29 +32,30 @@ class MainActivity : AppCompatActivity(), ListAdapter.OnItemClickListener {
         editText = findViewById(R.id.editText)
         rvList.layoutManager = LinearLayoutManager(this)
         button.setOnClickListener {
-            getnfo()
-
+            getInfo()
         }
     }
 
-    internal fun getnfo() {
+    private fun getInfo() {
 
         val call: Call<GithubUserInfo> = ApiHolder.service.getUserInfo(editText.text.toString())
-        //val call2: Call<GithubUser> = ApiHolder.service.getUser(editText.text.toString())
-        //val call3: Call<GetUserRepos> = ApiHolder.service.getUserRepos(editText.text.toString())
-
 
         call.enqueue(object : Callback<GithubUserInfo> {
             override fun onResponse(call: Call<GithubUserInfo>, response: Response<GithubUserInfo>) {
                 if (response.code() == 200) {
                     val userInfo = response.body()
                     responseQuantity = userInfo!!.total_count
+                    listOf.clear()
                     userInfo.items.map {
                         listOf.add(it.login)
                     }
 
                     tvQuantity.text = "Найдено " + responseQuantity!! + " пользователей"
-                    rvList.adapter = ListAdapter(this@MainActivity, listOf, this@MainActivity)
+                    rvList.adapter = UserAndReposAdapter(
+                        this@MainActivity,
+                        listOf,
+                        this@MainActivity
+                    )
                 }
             }
 

@@ -1,13 +1,10 @@
-package com.ace.aleksandr.searchuserongithub
+package com.ace.aleksandr.searchuserongithub.model
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-
-data class GetUserRepos(
+data class UserRepo(
 
     val id: Int,
     val node_id: String,
-    val name: String,
+    val name: String?,
     val full_name: String,
     val private: Boolean,
     val owner: Owner,

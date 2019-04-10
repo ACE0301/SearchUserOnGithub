@@ -1,5 +1,8 @@
-package com.ace.aleksandr.searchuserongithub
+package com.ace.aleksandr.searchuserongithub.data.api
 
+import com.ace.aleksandr.searchuserongithub.model.GithubUser
+import com.ace.aleksandr.searchuserongithub.model.GithubUserInfo
+import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,7 +17,7 @@ interface GitApiInterface {
     fun getUser(@Path("username") username: String): Call<GithubUser>
 
     @GET("/users/{username}/repos")
-    fun getUserRepos(@Path("username") username: String): Call<GetUserRepos>
+    fun getUserRepos(@Path("username") username: String): Call<List<UserRepo>>
 
 
 }

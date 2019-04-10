@@ -1,6 +1,5 @@
-package com.ace.aleksandr.searchuserongithub.data
+package com.ace.aleksandr.searchuserongithub.data.api
 
-import com.ace.aleksandr.searchuserongithub.GitApiInterface
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

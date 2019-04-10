@@ -1,4 +1,4 @@
-package com.ace.aleksandr.searchuserongithub
+package com.ace.aleksandr.searchuserongithub.model
 
 
 data class Owner(
