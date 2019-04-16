@@ -1,10 +1,18 @@
 package com.ace.aleksandr.searchuserongithub.model
 
+/**
+ *
+ * Поиск пользователей по логину
+ * https://api.github.com/search/users?q=%username%
+ * Используются поля:
+ * login
+ *
+ * **/
 
 data class SearchUserInfo(
 
-    val login: String,
-    val id: Int,
+    val login: String
+/*    val id: Int,
     val nodeId: String,
     val avatarUrl: String,
     val gravatarId: String,
@@ -21,5 +29,5 @@ data class SearchUserInfo(
     val receivedEventsUrl: String,
     val type: String,
     val siteAdmin: Boolean,
-    val score: Double
+    val score: Double*/
 )
