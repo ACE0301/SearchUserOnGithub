@@ -1,11 +1,11 @@
-package com.ace.aleksandr.searchuserongithub.view
+package com.ace.aleksandr.searchuserongithub.view.usersearch
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
-import kotlinx.android.synthetic.main.item_users_and_repos.view.*
+import kotlinx.android.synthetic.main.item_user_repos.view.*
 
 class UserSearchAdapter : RecyclerView.Adapter<UserSearchAdapter.ItemHolder>() {
 

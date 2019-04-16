@@ -1,6 +1,5 @@
 package com.ace.aleksandr.searchuserongithub.view
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.RepoRealm
 import io.realm.RealmChangeListener
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.item_users_and_repos.view.*
+import kotlinx.android.synthetic.main.item_user_repos.view.*
 
 class SavedUsersAdapter(
     //val c: Context,
@@ -23,7 +22,7 @@ class SavedUsersAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var v = LayoutInflater.from(parent.context).inflate(R.layout.item_users_and_repos, parent, false)
+        var v = LayoutInflater.from(parent.context).inflate(R.layout.item_user_repos, parent, false)
         return SavedUsersAdapter.ItemHolder(v)
     }
 

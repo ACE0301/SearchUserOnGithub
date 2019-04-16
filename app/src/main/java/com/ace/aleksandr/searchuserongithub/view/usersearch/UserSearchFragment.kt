@@ -2,14 +2,15 @@ package com.ace.aleksandr.searchuserongithub.view.usersearch
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
-import com.ace.aleksandr.searchuserongithub.model.GithubUserInfo
-import com.ace.aleksandr.searchuserongithub.view.UserSearchAdapter
+import com.ace.aleksandr.searchuserongithub.model.GithubUserInfoSearchResult
+import com.ace.aleksandr.searchuserongithub.view.userrepoinfo.UserReposFragment
 import kotlinx.android.synthetic.main.fragment_user_search.*
 
 class UserSearchFragment : Fragment(), UserSearchView {
@@ -55,15 +56,19 @@ class UserSearchFragment : Fragment(), UserSearchView {
         Toast.makeText(activity, errorText, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showUserInfo(user: GithubUserInfo) {
-        val quantityText = "Найдено ${user.total_count} пользователей"
+    override fun showUserInfo(userSearchResult: GithubUserInfoSearchResult) {
+        val quantityText = "Найдено ${userSearchResult.total_count} пользователей"
         tvQuantity.text = quantityText
-        mAdapter.data = user.items.map { it.login }
+        mAdapter.data = userSearchResult.items.map { it.login }
         rvList.scheduleLayoutAnimation()
     }
 
-    private fun openNewFragment(userName: String) {
-        Toast.makeText(activity, "Открываем новый экран $userName", Toast.LENGTH_LONG).show()
+    private fun openNewFragment(login: String) {
+        fragmentManager?.beginTransaction()
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            ?.replace(R.id.content, UserReposFragment.newInstance(login), UserReposFragment.TAG)
+            ?.addToBackStack(UserReposFragment.TAG)
+            ?.commit()
     }
 
     override fun isShowLoading(status: Boolean) {

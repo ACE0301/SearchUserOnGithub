@@ -1,7 +1,7 @@
 package com.ace.aleksandr.searchuserongithub.model
 
 
-data class Item(
+data class SearchUserInfo(
 
     val login: String,
     val id: Int,

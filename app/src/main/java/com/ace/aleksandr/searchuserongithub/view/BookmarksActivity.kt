@@ -4,20 +4,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.ace.aleksandr.searchuserongithub.model.RepoRealm
-import com.ace.aleksandr.searchuserongithub.view.usersearch.UserAndReposAdapter
+import com.ace.aleksandr.searchuserongithub.view.userrepoinfo.UserReposAdapter
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_bookmarks.*
 
 
-class BookmarksActivity : AppCompatActivity(), UserAndReposAdapter.OnItemClickListener {
+class BookmarksActivity : AppCompatActivity() {
     var name: String? = ""
     var location: String? = ""
     lateinit var realm: Realm
-
-    override fun onItemClick(view: View, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

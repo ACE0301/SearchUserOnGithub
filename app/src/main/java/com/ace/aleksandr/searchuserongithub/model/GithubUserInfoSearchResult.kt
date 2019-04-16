@@ -1,8 +1,8 @@
 package com.ace.aleksandr.searchuserongithub.model
 
-data class GithubUserInfo(
+data class GithubUserInfoSearchResult(
 
     val total_count: Int,
     val incomplete_results: Boolean,
-    val items: List<Item>
+    val items: List<SearchUserInfo>
 )
