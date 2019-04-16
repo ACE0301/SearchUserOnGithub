@@ -1,4 +1,4 @@
-package com.ace.aleksandr.searchuserongithub.view
+package com.ace.aleksandr.searchuserongithub.view.usersearch
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -17,7 +17,10 @@ class UserAndReposAdapter(
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {
         var v = LayoutInflater.from(c).inflate(R.layout.item_users_and_repos, p0, false)
-        return ItemHolder(v, onItemClickListener)
+        return ItemHolder(
+            v,
+            onItemClickListener
+        )
     }
 
     override fun getItemCount(): Int {

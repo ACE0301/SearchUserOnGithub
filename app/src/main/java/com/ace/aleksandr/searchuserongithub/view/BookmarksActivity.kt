@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.ace.aleksandr.searchuserongithub.model.RepoRealm
+import com.ace.aleksandr.searchuserongithub.view.usersearch.UserAndReposAdapter
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_bookmarks.*
 
@@ -28,11 +29,11 @@ class BookmarksActivity : AppCompatActivity(), UserAndReposAdapter.OnItemClickLi
 
         realm = Realm.getDefaultInstance()
         realm.beginTransaction()
-        var objectToRealm = RepoRealm(
-            name ?: "",
-            location ?: ""
-        )
-        val manageRepos = realm.copyToRealm(objectToRealm)
+//        var objectToRealm = RepoRealm(
+//            name ?: "",
+//            location ?: ""
+//        )
+//        val manageRepos = realm.copyToRealm(objectToRealm)
         realm.commitTransaction()
         rvListOfUsersInBookmarks.adapter = SavedUsersAdapter(
 

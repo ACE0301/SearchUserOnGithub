@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
 import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
+import com.ace.aleksandr.searchuserongithub.view.usersearch.UserAndReposAdapter
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_repos.*
 import retrofit2.Call
