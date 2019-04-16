@@ -1,5 +1,6 @@
 package com.ace.aleksandr.searchuserongithub.view
 
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +11,8 @@ import android.widget.TextView
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
 import com.ace.aleksandr.searchuserongithub.model.GithubUserInfo
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +38,6 @@ class MainActivity : AppCompatActivity(),
             getInfo()
         }
     }
-
     private fun getInfo() {
 
         val call: Call<GithubUserInfo> = ApiHolder.service.getUserInfo(editText.text.toString())
