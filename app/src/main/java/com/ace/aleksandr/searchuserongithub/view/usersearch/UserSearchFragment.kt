@@ -59,6 +59,7 @@ class UserSearchFragment : Fragment(), UserSearchView {
         val quantityText = "Найдено ${user.total_count} пользователей"
         tvQuantity.text = quantityText
         mAdapter.data = user.items.map { it.login }
+        rvList.scheduleLayoutAnimation()
     }
 
     private fun openNewFragment(userName: String) {
