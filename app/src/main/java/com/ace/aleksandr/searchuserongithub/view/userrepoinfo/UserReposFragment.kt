@@ -43,10 +43,14 @@ class UserReposFragment : Fragment(), UserReposView {
             layoutManager = LinearLayoutManager(activity)
             adapter = mAdapter
         }
+
+        fabSave.setOnClickListener {
+            presenter.saveRepos()
+        }
     }
 
     override fun showUser(user: GithubUser) {
-        val userInfo = "Имя пользователя ${user.name} из города ${user.location}"
+        val userInfo = "Имя пользователя ${user.name?:"не указано"}, город:rgge ${user.location?:"не указан"}"
         tvUserLastName.text = userInfo
     }
 
