@@ -1,6 +1,6 @@
 package com.ace.aleksandr.searchuserongithub.model.repository
 
-import com.ace.aleksandr.searchuserongithub.model.RepoRealm
+import com.ace.aleksandr.searchuserongithub.db.migration.models.RepoRealm
 import io.reactivex.Completable
 import io.reactivex.Observable
 

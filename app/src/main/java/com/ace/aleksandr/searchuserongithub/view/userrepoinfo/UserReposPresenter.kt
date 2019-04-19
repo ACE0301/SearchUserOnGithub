@@ -10,7 +10,12 @@ class UserReposPresenter(
     view: UserReposView,
     private val login: String
 ) : BasePresenter<UserReposView>(view) {
-
+/*    Применительно к Observable тип Disposable позволяет вызывать метод dispose,
+    означающий «Я закончил работать с этим ресурсом, мне больше не нужны данные».
+    Если у вас есть сетевой запрос, то он может быть отменён.
+    Если вы прослушивали бесконечный поток нажатий кнопок, то это будет означать,
+    что вы больше не хотите получать эти события,
+    в таком случае можно удалить OnClickListener у View*/
     private var disposableGetUser: Disposable? = null
     private var disposableGetUserRepos: Disposable? = null
 

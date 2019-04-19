@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
-import com.ace.aleksandr.searchuserongithub.model.RepoRealm
+import com.ace.aleksandr.searchuserongithub.db.migration.models.RepoRealm
 import io.realm.RealmChangeListener
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.item_user_repos.view.*
