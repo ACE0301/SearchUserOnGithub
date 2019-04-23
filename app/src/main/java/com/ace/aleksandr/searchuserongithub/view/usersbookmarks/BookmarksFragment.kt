@@ -1,7 +1,7 @@
 package com.ace.aleksandr.searchuserongithub.view.usersbookmarks
 
 import android.support.v4.app.Fragment
-import com.ace.aleksandr.searchuserongithub.model.GithubUser
+import com.ace.aleksandr.searchuserongithub.model.userinfo.data.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 
 class BookmarksFragment: Fragment(), BookmarksView {

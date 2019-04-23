@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
-import com.ace.aleksandr.searchuserongithub.model.GithubUser
+import com.ace.aleksandr.searchuserongithub.model.userinfo.data.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import kotlinx.android.synthetic.main.fragment_repos_user.*
 

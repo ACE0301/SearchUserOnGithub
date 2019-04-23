@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
-import com.ace.aleksandr.searchuserongithub.db.migration.models.RepoRealm
+import com.ace.aleksandr.searchuserongithub.model.userinfo.repository.sources.cache.impl.realm.data.RepoRealm
 import io.realm.RealmChangeListener
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.item_user_repos.view.*
@@ -27,7 +27,7 @@ class SavedUsersAdapter(
     }
 
     override fun onBindViewHolder(p0: RecyclerView.ViewHolder, p1: Int) {
-        (p0 as SavedUsersAdapter.ItemHolder).bindData(users.get(p1)?.nameofUser ?: "")
+        (p0 as SavedUsersAdapter.ItemHolder).bindData(users.get(p1)?.name ?: "")
     }
 
     override fun getItemCount(): Int {
@@ -39,8 +39,8 @@ class SavedUsersAdapter(
         notifyDataSetChanged()
     }
 
-    class ItemHolder(itemView: View):
-                     //var mItemClickListener: SavedUsersAdapter.OnItemClickListener) :
+    class ItemHolder(itemView: View) :
+    //var mItemClickListener: SavedUsersAdapter.OnItemClickListener) :
         RecyclerView.ViewHolder(itemView) {
         fun bindData(item: String) {
             itemView.tvItem.text = item

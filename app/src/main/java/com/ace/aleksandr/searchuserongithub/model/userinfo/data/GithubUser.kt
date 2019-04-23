@@ -1,4 +1,4 @@
-package com.ace.aleksandr.searchuserongithub.model
+package com.ace.aleksandr.searchuserongithub.model.userinfo.data
 
 /**
  * https://api.github.com/users/%username%
@@ -9,9 +9,9 @@ package com.ace.aleksandr.searchuserongithub.model
 
 
 data class GithubUser(
-    /*val login: String? = null,
-    val id: Int? = null,
-    val node_id: String? = null,
+    //val login: String? = null,
+    var id: Int? = null,
+    /*val node_id: String? = null,
     val avatar_url: String? = null,
     val gravatar_id: String? = null,
     val url: String? = null,
@@ -27,10 +27,10 @@ data class GithubUser(
     val received_events_url: String? = null,
     val type: String? = null,
     val site_admin: Boolean? = null,*/
-    val name: String? = null,
+    var name: String? = null,
     /*val company: Any? = null,
     val blog: String? = null,*/
-    val location: String? = null
+    var location: String? = null
     /*val email: Any? = null,
     val hireable: Boolean? = null,
     val bio: Any? = null,

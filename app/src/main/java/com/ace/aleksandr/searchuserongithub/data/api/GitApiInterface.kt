@@ -1,6 +1,6 @@
 package com.ace.aleksandr.searchuserongithub.data.api
 
-import com.ace.aleksandr.searchuserongithub.model.GithubUser
+import com.ace.aleksandr.searchuserongithub.model.userinfo.data.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.GithubUserInfoSearchResult
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import io.reactivex.Single
