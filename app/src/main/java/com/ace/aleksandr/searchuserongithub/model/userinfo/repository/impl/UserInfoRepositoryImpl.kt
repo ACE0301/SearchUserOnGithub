@@ -14,9 +14,8 @@ class UserInfoRepositoryImpl(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun list(fromCache: Boolean): Single<List<GithubUser>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-
+    override fun list(fromCache: Boolean): Single<List<GithubUser>> =
+        userInfoCacheDataSource.list()
 }
+
+

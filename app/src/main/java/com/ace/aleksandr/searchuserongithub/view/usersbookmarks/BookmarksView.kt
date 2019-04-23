@@ -7,5 +7,4 @@ interface BookmarksView {
     fun showUser(user: GithubUser)
     fun showUserRepos(userRepos: List<UserRepo>)
     fun showError(errorText: String)
-
 }

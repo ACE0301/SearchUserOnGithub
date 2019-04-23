@@ -22,6 +22,7 @@ class UserReposPresenter(
     override fun onCreate() {
         getUser()
         getUserRepos()
+        saveRepos()
     }
 
     private fun getUser() {
@@ -52,6 +53,10 @@ class UserReposPresenter(
             }, {
                 view?.showError(it.message ?: "")
             })
+    }
+    private fun saveToBookmarks(){
+
+
     }
 
     override fun onDestroy() {
