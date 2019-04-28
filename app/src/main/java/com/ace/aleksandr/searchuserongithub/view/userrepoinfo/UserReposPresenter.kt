@@ -2,27 +2,28 @@ package com.ace.aleksandr.searchuserongithub.view.userrepoinfo
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
+import com.ace.aleksandr.searchuserongithub.model.RepoRealm
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import io.realm.Realm
 
 class UserReposPresenter(
     view: UserReposView,
     private val login: String
 ) : BasePresenter<UserReposView>(view) {
-/*    Применительно к Observable тип Disposable позволяет вызывать метод dispose,
-    означающий «Я закончил работать с этим ресурсом, мне больше не нужны данные».
-    Если у вас есть сетевой запрос, то он может быть отменён.
-    Если вы прослушивали бесконечный поток нажатий кнопок, то это будет означать,
-    что вы больше не хотите получать эти события,
-    в таком случае можно удалить OnClickListener у View*/
+    /*    Применительно к Observable тип Disposable позволяет вызывать метод dispose,
+        означающий «Я закончил работать с этим ресурсом, мне больше не нужны данные».
+        Если у вас есть сетевой запрос, то он может быть отменён.
+        Если вы прослушивали бесконечный поток нажатий кнопок, то это будет означать,
+        что вы больше не хотите получать эти события,
+        в таком случае можно удалить OnClickListener у View*/
     private var disposableGetUser: Disposable? = null
     private var disposableGetUserRepos: Disposable? = null
 
     override fun onCreate() {
         getUser()
         getUserRepos()
-        saveRepos()
     }
 
     private fun getUser() {
@@ -54,10 +55,6 @@ class UserReposPresenter(
                 view?.showError(it.message ?: "")
             })
     }
-    private fun saveToBookmarks(){
-
-
-    }
 
     override fun onDestroy() {
         disposableGetUser?.dispose()
@@ -65,9 +62,15 @@ class UserReposPresenter(
     }
 
     fun saveRepos() {
-
-
-
-
+        val realm = Realm.getDefaultInstance()
+        //realm.beginTransaction()
+        //var users = realm.where(RepoRealm::class.java)
+        realm.executeTransaction {
+            val users: RepoRealm = realm.createObject(RepoRealm::class.java)
+            //users.id = 1
+            users.name = "rgregre"
+        }
     }
+
+
 }

@@ -1,6 +1,6 @@
 package com.ace.aleksandr.searchuserongithub.view.userrepoinfo
 
-import com.ace.aleksandr.searchuserongithub.model.userinfo.data.GithubUser
+import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 
 

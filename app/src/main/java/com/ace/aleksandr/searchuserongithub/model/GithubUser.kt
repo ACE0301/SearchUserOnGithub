@@ -1,4 +1,4 @@
-package com.ace.aleksandr.searchuserongithub.model.userinfo.data
+package com.ace.aleksandr.searchuserongithub.model
 
 /**
  * https://api.github.com/users/%username%

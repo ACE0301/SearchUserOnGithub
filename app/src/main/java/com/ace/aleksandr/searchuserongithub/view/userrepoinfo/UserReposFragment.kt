@@ -2,14 +2,16 @@ package com.ace.aleksandr.searchuserongithub.view.userrepoinfo
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
-import com.ace.aleksandr.searchuserongithub.model.userinfo.data.GithubUser
+import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
+import com.ace.aleksandr.searchuserongithub.view.usersbookmarks.BookmarksFragment
 import kotlinx.android.synthetic.main.fragment_repos_user.*
 
 class UserReposFragment : Fragment(), UserReposView {
@@ -47,10 +49,21 @@ class UserReposFragment : Fragment(), UserReposView {
         fabSave.setOnClickListener {
             presenter.saveRepos()
         }
+
+        btnToBookmarks.setOnClickListener {
+//            val intent = Intent(this, )
+//            startActivity(intent)
+            fragmentManager?.beginTransaction()
+                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                ?.replace(R.id.content, BookmarksFragment.newInstance(BookmarksFragment.TAG))
+                ?.addToBackStack(BookmarksFragment.TAG)
+                ?.commit()
+
+        }
     }
 
     override fun showUser(user: GithubUser) {
-        val userInfo = "Имя пользователя ${user.name?:"не указано"}, город:rgge ${user.location?:"не указан"}"
+        val userInfo = "Имя пользователя ${user.name?:"не указано"}, город: ${user.location?:"не указан"}"
         tvUserLastName.text = userInfo
     }
 
