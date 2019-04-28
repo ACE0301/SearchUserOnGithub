@@ -18,7 +18,7 @@ class BookmarksFragment : Fragment(), BookmarksView {
     private val presenter by lazy { BookmarksPresenter(this) }
     private val mAdapter = BookmarksAdapter()
 
-        override fun showUsersBookmarks(users: RepoRealm) {
+    override fun showUsersBookmarks(users: RepoRealm) {
         val realm = Realm.getDefaultInstance()
         val userName = {
             realm.where(RepoRealm::class.java)
