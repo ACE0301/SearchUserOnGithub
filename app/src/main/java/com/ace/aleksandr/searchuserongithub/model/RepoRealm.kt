@@ -1,9 +1,6 @@
 package com.ace.aleksandr.searchuserongithub.model
 
-import io.realm.RealmList
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
-
 
 
 open class RepoRealm(
@@ -15,9 +12,9 @@ open class RepoRealm(
 ) : RealmObject()
 //{
 //
-////    companion object {
-////        val FIELD_ID = "id"
-////    }
+//    companion object {
+//        val FIELD_ID = "id"
+//    }
 //}
 
 

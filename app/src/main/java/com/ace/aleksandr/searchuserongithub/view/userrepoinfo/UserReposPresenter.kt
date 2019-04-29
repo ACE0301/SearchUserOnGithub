@@ -1,5 +1,6 @@
 package com.ace.aleksandr.searchuserongithub.view.userrepoinfo
 
+import android.content.Intent
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
 import com.ace.aleksandr.searchuserongithub.model.RepoRealm
@@ -24,6 +25,7 @@ class UserReposPresenter(
     override fun onCreate() {
         getUser()
         getUserRepos()
+
     }
 
     private fun getUser() {
@@ -56,20 +58,19 @@ class UserReposPresenter(
             })
     }
 
+    fun saveRepos() {
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+        realm.executeTransactionAsync {
+            val user = it.createObject(RepoRealm::class.java)
+            user.name = "example"
+        }
+        realm.commitTransaction()
+    }
+
     override fun onDestroy() {
         disposableGetUser?.dispose()
         disposableGetUserRepos?.dispose()
-    }
-
-    fun saveRepos() {
-        val realm = Realm.getDefaultInstance()
-        //realm.beginTransaction()
-        //var users = realm.where(RepoRealm::class.java)
-        realm.executeTransaction {
-            val users: RepoRealm = realm.createObject(RepoRealm::class.java)
-            //users.id = 1
-            users.name = "rgregre"
-        }
     }
 
 

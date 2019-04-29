@@ -7,7 +7,9 @@ import android.view.View
 import com.ace.aleksandr.searchuserongithub.view.userrepoinfo.UserReposAdapter
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_bookmarks.*
-
+/**
+ * класс не рабочий, по возможности удалить
+ * **/
 
 class BookmarksActivity : AppCompatActivity() {
     var name: String? = ""

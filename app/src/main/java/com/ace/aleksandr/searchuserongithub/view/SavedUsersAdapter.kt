@@ -9,7 +9,9 @@ import com.ace.aleksandr.searchuserongithub.model.RepoRealm
 import io.realm.RealmChangeListener
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.item_user_repos.view.*
-
+/**
+ * класс не рабочий, по возможности удалить
+ * **/
 class SavedUsersAdapter(
     //val c: Context,
     //val onItemClickListener: OnItemClickListener,

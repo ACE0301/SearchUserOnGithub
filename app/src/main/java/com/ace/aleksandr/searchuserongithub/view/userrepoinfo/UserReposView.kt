@@ -10,6 +10,9 @@ interface UserReposView {
     fun showUserRepos(userRepos: List<UserRepo>)
     fun showError(errorText: String)
 }
+/**
+ * уроки от Димана
+ * **/
 //
 //interface DimonsView {
 //    fun showAnimatioins(animations: List<Animation>)

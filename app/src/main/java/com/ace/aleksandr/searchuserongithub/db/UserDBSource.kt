@@ -1,6 +1,5 @@
 package com.ace.aleksandr.searchuserongithub.db
 
-import com.ace.aleksandr.searchuserongithub.CustomApplication
 import com.ace.aleksandr.searchuserongithub.model.RepoRealm
 import io.reactivex.Completable
 import io.reactivex.Single
