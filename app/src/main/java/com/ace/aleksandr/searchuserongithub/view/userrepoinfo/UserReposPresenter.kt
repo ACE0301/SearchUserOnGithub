@@ -1,17 +1,21 @@
 package com.ace.aleksandr.searchuserongithub.view.userrepoinfo
 
-import android.content.Intent
+import android.util.Log
+import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
+import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.RepoRealm
+import com.ace.aleksandr.searchuserongithub.model.SearchUserInfo
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import io.realm.log.RealmLog
 
 class UserReposPresenter(
     view: UserReposView,
-    private val login: String
+    private val login1: String
 ) : BasePresenter<UserReposView>(view) {
     /*    Применительно к Observable тип Disposable позволяет вызывать метод dispose,
         означающий «Я закончил работать с этим ресурсом, мне больше не нужны данные».
@@ -21,6 +25,7 @@ class UserReposPresenter(
         в таком случае можно удалить OnClickListener у View*/
     private var disposableGetUser: Disposable? = null
     private var disposableGetUserRepos: Disposable? = null
+
 
     override fun onCreate() {
         getUser()
@@ -33,7 +38,7 @@ class UserReposPresenter(
             disposableGetUser?.dispose()
         }
 
-        disposableGetUser = ApiHolder.service.getUser(login)
+        disposableGetUser = ApiHolder.service.getUser(login1)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -48,7 +53,7 @@ class UserReposPresenter(
             disposableGetUserRepos?.dispose()
         }
 
-        disposableGetUserRepos = ApiHolder.service.getUserRepos(login)
+        disposableGetUserRepos = ApiHolder.service.getUserRepos(login1)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -59,18 +64,23 @@ class UserReposPresenter(
     }
 
     fun saveRepos() {
-        val realm = Realm.getDefaultInstance()
-        realm.beginTransaction()
-        realm.executeTransactionAsync {
-            val user = it.createObject(RepoRealm::class.java)
-            user.name = "example"
-        }
-        realm.commitTransaction()
+        Realm.getDefaultInstance()
+            .use { realmInstance ->
+                realmInstance.executeTransaction { realm ->
+                    realm.insertOrUpdate(RepoRealm().apply
+                    {
+                        login = login1
+
+                    })
+                }
+            }
     }
 
     override fun onDestroy() {
         disposableGetUser?.dispose()
         disposableGetUserRepos?.dispose()
+
+
     }
 
 

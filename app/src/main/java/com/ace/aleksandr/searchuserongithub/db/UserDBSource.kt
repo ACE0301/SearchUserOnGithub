@@ -48,4 +48,5 @@ class UserDbSource {
             Realm.compactRealm(mRealmConfiguration)
         }
     }
+
 }

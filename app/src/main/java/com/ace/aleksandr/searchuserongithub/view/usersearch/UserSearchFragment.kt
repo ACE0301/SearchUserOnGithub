@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.GithubUserInfoSearchResult
 import com.ace.aleksandr.searchuserongithub.view.userrepoinfo.UserReposFragment
+import com.ace.aleksandr.searchuserongithub.view.usersbookmarks.BookmarksFragment
 import kotlinx.android.synthetic.main.fragment_user_search.*
 
 class UserSearchFragment : Fragment(), UserSearchView {
@@ -45,6 +46,14 @@ class UserSearchFragment : Fragment(), UserSearchView {
             openNewFragment(it)
         }
         pbLoading.isIndeterminate = true
+
+        btnToBookmarks.setOnClickListener {
+            fragmentManager?.beginTransaction()
+                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                ?.replace(R.id.content, BookmarksFragment.newInstance(BookmarksFragment.TAG))
+                ?.addToBackStack(BookmarksFragment.TAG)
+                ?.commit()
+        }
     }
 
     override fun onDestroyView() {
@@ -78,4 +87,5 @@ class UserSearchFragment : Fragment(), UserSearchView {
             pbLoading.visibility = View.INVISIBLE
         }
     }
+
 }

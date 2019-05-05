@@ -48,27 +48,26 @@ class UserReposFragment : Fragment(), UserReposView {
 
         fabSave.setOnClickListener {
             presenter.saveRepos()
+            Toast.makeText(this.activity, "Добавлено в закладки", Toast.LENGTH_LONG).show()
         }
 
+
         btnToBookmarks.setOnClickListener {
-//            val intent = Intent(this, )
-//            startActivity(intent)
             fragmentManager?.beginTransaction()
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 ?.replace(R.id.content, BookmarksFragment.newInstance(BookmarksFragment.TAG))
                 ?.addToBackStack(BookmarksFragment.TAG)
                 ?.commit()
-
         }
     }
 
     override fun showUser(user: GithubUser) {
-        val userInfo = "Имя пользователя ${user.name?:"не указано"}, город: ${user.location?:"не указан"}"
+        val userInfo = "Имя пользователя ${user.name ?: "не указано"}, город: ${user.location ?: "не указан"}"
         tvUserLastName.text = userInfo
     }
 
     override fun showUserRepos(userRepos: List<UserRepo>) {
-        mAdapter.data = userRepos.map { it.name ?: "Пустое имя" }
+        mAdapter.data = userRepos.map { it.name ?: "отсутствует" }
     }
 
     override fun showError(errorText: String) {

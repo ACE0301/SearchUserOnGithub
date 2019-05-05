@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SearchUserOnGithub</string>
+    <string name="bookmarks">Закладки</string>
 </resources>

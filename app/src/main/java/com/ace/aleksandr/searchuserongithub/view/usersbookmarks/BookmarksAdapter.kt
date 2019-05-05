@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
-import kotlinx.android.synthetic.main.item_user_repos.view.*
+import kotlinx.android.synthetic.main.item_users_in_bookmarks.view.*
 
 class BookmarksAdapter : RecyclerView.Adapter<BookmarksAdapter.UserBookmarksHolder>() {
     var onItemClickListener: ((String) -> Unit) = {}
@@ -16,21 +16,24 @@ class BookmarksAdapter : RecyclerView.Adapter<BookmarksAdapter.UserBookmarksHold
             notifyDataSetChanged()
         }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserBookmarksHolder =
-        UserBookmarksHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_users_search, parent, false))
+        UserBookmarksHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_users_in_bookmarks,
+                parent,
+                false
+            )
+        )
 
     override fun getItemCount(): Int = data.size
 
-
-    override fun onBindViewHolder(holder: BookmarksAdapter.UserBookmarksHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserBookmarksHolder, position: Int) {
         holder.bindData(data[position])
     }
 
     inner class UserBookmarksHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(item: String) {
-            itemView.tvItem.text = item
-
+            itemView.tvItemBookmarks.text = item
         }
     }
 }

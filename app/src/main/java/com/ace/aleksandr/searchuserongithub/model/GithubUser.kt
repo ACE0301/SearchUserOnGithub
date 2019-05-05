@@ -41,3 +41,4 @@ data class GithubUser(
     val created_at: String? = null,
     val updated_at: String? = null*/
 )
+
