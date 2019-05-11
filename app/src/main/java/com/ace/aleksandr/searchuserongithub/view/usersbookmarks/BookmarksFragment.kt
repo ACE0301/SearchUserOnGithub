@@ -39,12 +39,14 @@ class BookmarksFragment : Fragment(), BookmarksView {
             adapter = mAdapter
         }
     }
+
     override fun showUsersBookmarks() {
 
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
-                val users = inRealm.where(RepoRealm::class.java!!).findAll()
-                mAdapter.data = users.map { it.toString() }
+                val users =
+                    inRealm.where(RepoRealm::class.java!!).equalTo("isFavorite", true).findAll()
+                mAdapter.data = users.map { it.login.toString() }
             }
         }
     }
