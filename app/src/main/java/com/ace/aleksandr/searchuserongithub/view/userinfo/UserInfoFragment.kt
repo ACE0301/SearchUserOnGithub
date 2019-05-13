@@ -1,4 +1,4 @@
-package com.ace.aleksandr.searchuserongithub.view.userrepoinfo
+package com.ace.aleksandr.searchuserongithub.view.userinfo
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,24 +11,25 @@ import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
-import com.ace.aleksandr.searchuserongithub.view.usersbookmarks.BookmarksFragment
+import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
+import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUsersInfoFragment
 import kotlinx.android.synthetic.main.fragment_repos_user.*
 
-class UserReposFragment : Fragment(), UserReposView {
+class UserInfoFragment : Fragment(), UserInfoView {
 
     companion object {
-        const val TAG = "UserReposFragment"
+        const val TAG = "UserInfoFragment"
 
         private const val ARGUMENT_USER_LOGIN = "ARGUMENT_USER_LOGIN"
 
-        fun newInstance(userLogin: String) = UserReposFragment().apply {
+        fun newInstance(userLogin: String) = UserInfoFragment().apply {
             arguments = Bundle().apply {
                 putString(ARGUMENT_USER_LOGIN, userLogin)
             }
         }
     }
 
-    private val mAdapter = UserReposAdapter()
+    private val mAdapter = UserInfoAdapter()
     private val presenter by lazy { UserReposPresenter(this, arguments?.getString(ARGUMENT_USER_LOGIN) ?: "") }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -55,8 +56,8 @@ class UserReposFragment : Fragment(), UserReposView {
         btnToBookmarks.setOnClickListener {
             fragmentManager?.beginTransaction()
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.replace(R.id.content, BookmarksFragment.newInstance(BookmarksFragment.TAG))
-                ?.addToBackStack(BookmarksFragment.TAG)
+                ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUsersInfoFragment.TAG))
+                ?.addToBackStack(FavoriteUsersInfoFragment.TAG)
                 ?.commit()
         }
     }

@@ -1,9 +1,9 @@
-package com.ace.aleksandr.searchuserongithub.view.usersbookmarks
+package com.ace.aleksandr.searchuserongithub.view.favoriteusers
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 
 
-class BookmarksPresenter(view: BookmarksView) : BasePresenter<BookmarksView>(view) {
+class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUsersView>(view) {
     override fun onCreate() {
         getUserFromRealm()
     }

@@ -1,4 +1,4 @@
-package com.ace.aleksandr.searchuserongithub.view.usersbookmarks
+package com.ace.aleksandr.searchuserongithub.view.favoriteusers
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
 import kotlinx.android.synthetic.main.item_users_in_bookmarks.view.*
 
-class BookmarksAdapter : RecyclerView.Adapter<BookmarksAdapter.UserBookmarksHolder>() {
+class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.UserBookmarksHolder>() {
     var onItemClickListener: ((String) -> Unit) = {}
 
     var data: List<String> = emptyList()
@@ -34,6 +34,9 @@ class BookmarksAdapter : RecyclerView.Adapter<BookmarksAdapter.UserBookmarksHold
     inner class UserBookmarksHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(item: String) {
             itemView.tvItemBookmarks.text = item
+            itemView.tvItemBookmarks.setOnClickListener {
+                onItemClickListener.invoke(item)
+            }
         }
     }
 }

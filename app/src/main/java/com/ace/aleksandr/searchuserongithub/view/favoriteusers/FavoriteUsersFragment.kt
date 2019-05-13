@@ -1,28 +1,30 @@
-package com.ace.aleksandr.searchuserongithub.view.usersbookmarks
+package com.ace.aleksandr.searchuserongithub.view.favoriteusers
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.RepoRealm
+import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUsersInfoFragment
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_bookmarks.*
 
-class BookmarksFragment : Fragment(), BookmarksView {
+class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
     private var mRealm: Realm? = null
 
     companion object {
-        const val TAG = "BookmarksFragment"
+        const val TAG = "FavoriteUsersFragment"
 
-        fun newInstance(tag: String) = BookmarksFragment()
+        fun newInstance(tag: String) = FavoriteUsersFragment()
 
     }
 
-    private val presenter by lazy { BookmarksPresenter(this) }
-    private val mAdapter = BookmarksAdapter()
+    private val presenter by lazy { FavoriteUsersPresenter(this) }
+    private val mAdapter = FavoriteUsersAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_bookmarks, container, false)
@@ -38,7 +40,11 @@ class BookmarksFragment : Fragment(), BookmarksView {
             layoutManager = LinearLayoutManager(activity)
             adapter = mAdapter
         }
+        mAdapter.onItemClickListener = {
+            openNewFragment(it)
+        }
     }
+
 
     override fun showUsersBookmarks() {
 
@@ -49,6 +55,14 @@ class BookmarksFragment : Fragment(), BookmarksView {
                 mAdapter.data = users.map { it.login.toString() }
             }
         }
+    }
+
+    private fun openNewFragment(login: String) {
+        fragmentManager?.beginTransaction()
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            ?.replace(R.id.content, FavoriteUsersInfoFragment.newInstance(login), FavoriteUsersInfoFragment.TAG)
+            ?.addToBackStack(FavoriteUsersInfoFragment.TAG)
+            ?.commit()
     }
 
     override fun showError(errorText: String) {

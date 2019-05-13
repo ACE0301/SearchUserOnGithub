@@ -1,4 +1,4 @@
-package com.ace.aleksandr.searchuserongithub.view.userrepoinfo
+package com.ace.aleksandr.searchuserongithub.view.userinfo
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
 import kotlinx.android.synthetic.main.item_user_repos.view.*
 
-class UserReposAdapter : RecyclerView.Adapter<UserReposAdapter.UserReposHolder>() {
+class UserInfoAdapter : RecyclerView.Adapter<UserInfoAdapter.UserReposHolder>() {
 
     var onItemClickListener: ((String) -> Unit) = {}
 

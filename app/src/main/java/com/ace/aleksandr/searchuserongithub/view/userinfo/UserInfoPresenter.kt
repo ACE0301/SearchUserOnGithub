@@ -1,4 +1,4 @@
-package com.ace.aleksandr.searchuserongithub.view.userrepoinfo
+package com.ace.aleksandr.searchuserongithub.view.userinfo
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
@@ -10,7 +10,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import io.realm.RealmList
 
 private var idRealm = 0
 private var nameRealm: String? = null
@@ -18,10 +17,9 @@ private var locationRealm: String? = null
 
 
 class UserReposPresenter(
-    view: UserReposView,
+    view: UserInfoView,
     private val login1: String
-    //private val user: GithubUser
-) : BasePresenter<UserReposView>(view) {
+) : BasePresenter<UserInfoView>(view) {
     /*    Применительно к Observable тип Disposable позволяет вызывать метод dispose,
         означающий «Я закончил работать с этим ресурсом, мне больше не нужны данные».
         Если у вас есть сетевой запрос, то он может быть отменён.
@@ -48,13 +46,10 @@ class UserReposPresenter(
             .subscribe({
                 view?.showUser(it)
                 saveToRealm(it)
-//                nameRealm = it.name
-//                locationRealm = it.location
             }, {
                 view?.showError(it.message ?: "")
 
             })
-
     }
 
     private fun getUserRepos() {
@@ -82,7 +77,6 @@ class UserReposPresenter(
                         login = login1
                         name = user.name
                         location = user.location
-                        //listOfRepos = ...
                     })
                 }
             }
@@ -90,24 +84,15 @@ class UserReposPresenter(
 
     private fun addReposToRealm(repos: List<UserRepo>) {
 
-        Realm.getDefaultInstance()
-            .use { realmInstance ->
-                realmInstance.executeTransaction { realm ->
-                    realm.insertOrUpdate(RepoRealm().apply
-                    {
-                        listOfRepos?.addAll(repos)
-                    })
-                }
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction { inRealm ->
+                val users = inRealm.where(RepoRealm::class.java).equalTo("id", idRealm).findFirst()
+                realm.insertOrUpdate(RepoRealm().apply {
+                    users?.listOfRepos?.addAll(repos.map { Repos(it.name) })
+                })
             }
-//        Realm.getDefaultInstance().use { realm ->
-//            realm.executeTransaction { inRealm ->
-//                val users = inRealm.where(RepoRealm::class.java).equalTo("login", login1).findFirst()
-//                var newsListObj = Repos()
-//                var _newsList = RealmList<UserRepo>()
-//                _newsList.addAll(repos)
-//                users?.listOfRepos?.addAll(_newsList)
+        }
     }
-
 
     fun saveRepos() {
         Realm.getDefaultInstance().use { realm ->
@@ -116,25 +101,13 @@ class UserReposPresenter(
                 users?.isFavorite = true
             }
         }
-//        Realm.getDefaultInstance()
-//            .use { realmInstance ->
-//                realmInstance.executeTransaction { realm ->
-//                    realm.insertOrUpdate(RepoRealm().apply
-//                    {
-//                        login = login1
-//
-//                    })
-//                }
-//            }
     }
+
 
     override fun onDestroy() {
         disposableGetUser?.dispose()
         disposableGetUserRepos?.dispose()
-
     }
 }
 
-private fun <E> RealmList<E>?.addAll(elements: List<UserRepo>) {
 
-}
