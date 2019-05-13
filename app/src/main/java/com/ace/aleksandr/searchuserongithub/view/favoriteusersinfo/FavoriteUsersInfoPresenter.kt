@@ -7,12 +7,11 @@ class FavoriteUsersInfoPresenter(
     private val login1: String
 ) : BasePresenter<FavoriteUsersInfoView>(view) {
     override fun onCreate() {
-        getReposFromRealm()
-
+        getReposFromRealm(login1)
     }
 
-    private fun getReposFromRealm() {
-//        view?.showUserInfo()
+    private fun getReposFromRealm(login1: String) {
+        view?.showUserInfo(login1)
 //        view?.showUserRepos()
     }
 

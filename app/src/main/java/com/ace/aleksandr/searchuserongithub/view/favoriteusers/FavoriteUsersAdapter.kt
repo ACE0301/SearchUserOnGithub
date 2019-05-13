@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
-import kotlinx.android.synthetic.main.item_users_in_bookmarks.view.*
+import kotlinx.android.synthetic.main.item_favorite_users.view.*
 
 class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.UserBookmarksHolder>() {
     var onItemClickListener: ((String) -> Unit) = {}
@@ -19,7 +19,7 @@ class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.UserBookm
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserBookmarksHolder =
         UserBookmarksHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_users_in_bookmarks,
+                R.layout.item_favorite_users,
                 parent,
                 false
             )

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
-import kotlinx.android.synthetic.main.item_user_repos.view.*
+import kotlinx.android.synthetic.main.item_user_info.view.*
 
 class UserInfoAdapter : RecyclerView.Adapter<UserInfoAdapter.UserReposHolder>() {
 
@@ -18,7 +18,7 @@ class UserInfoAdapter : RecyclerView.Adapter<UserInfoAdapter.UserReposHolder>() 
         }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): UserReposHolder =
-        UserReposHolder(LayoutInflater.from(p0.context).inflate(R.layout.item_user_repos, p0, false))
+        UserReposHolder(LayoutInflater.from(p0.context).inflate(R.layout.item_user_info, p0, false))
 
     override fun getItemCount(): Int {
         return data.size

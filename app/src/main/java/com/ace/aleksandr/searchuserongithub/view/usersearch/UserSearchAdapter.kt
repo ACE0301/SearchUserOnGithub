@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
-import kotlinx.android.synthetic.main.item_user_repos.view.*
+import kotlinx.android.synthetic.main.item_user_info.view.*
 
 class UserSearchAdapter : RecyclerView.Adapter<UserSearchAdapter.ItemHolder>() {
 
@@ -18,7 +18,7 @@ class UserSearchAdapter : RecyclerView.Adapter<UserSearchAdapter.ItemHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder =
-        ItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_users_search, parent, false))
+        ItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_user_search, parent, false))
 
     override fun getItemCount(): Int = data.size
 

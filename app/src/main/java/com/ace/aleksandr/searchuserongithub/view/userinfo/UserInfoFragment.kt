@@ -13,7 +13,7 @@ import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
 import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUsersInfoFragment
-import kotlinx.android.synthetic.main.fragment_repos_user.*
+import kotlinx.android.synthetic.main.fragment_user_info.*
 
 class UserInfoFragment : Fragment(), UserInfoView {
 
@@ -33,7 +33,7 @@ class UserInfoFragment : Fragment(), UserInfoView {
     private val presenter by lazy { UserReposPresenter(this, arguments?.getString(ARGUMENT_USER_LOGIN) ?: "") }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_repos_user, container, false)
+        inflater.inflate(R.layout.fragment_user_info, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

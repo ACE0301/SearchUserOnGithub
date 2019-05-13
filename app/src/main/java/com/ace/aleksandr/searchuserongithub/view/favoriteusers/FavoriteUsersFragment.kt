@@ -11,7 +11,7 @@ import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.RepoRealm
 import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUsersInfoFragment
 import io.realm.Realm
-import kotlinx.android.synthetic.main.fragment_bookmarks.*
+import kotlinx.android.synthetic.main.fragment_favorite_users.*
 
 class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
     private var mRealm: Realm? = null
@@ -27,7 +27,7 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
     private val mAdapter = FavoriteUsersAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_bookmarks, container, false)
+        inflater.inflate(R.layout.fragment_favorite_users, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

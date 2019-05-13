@@ -5,7 +5,12 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.realm.Realm
 import io.realm.RealmConfiguration
-
+/**
+ *
+ * класс пока не используется,
+ * необходимо добавить методы для realm
+ *
+ * **/
 class UserDbSource {
     private var mRealmConfiguration: RealmConfiguration? = null
     val users: Single<List<RepoRealm>>

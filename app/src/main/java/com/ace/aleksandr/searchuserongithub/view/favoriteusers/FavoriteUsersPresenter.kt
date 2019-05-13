@@ -8,7 +8,7 @@ class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUs
         getUserFromRealm()
     }
 
-    fun getUserFromRealm() {
+    private fun getUserFromRealm() {
         view?.showUsersBookmarks()
     }
 

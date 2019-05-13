@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
-import kotlinx.android.synthetic.main.item_user_repos.view.*
+import kotlinx.android.synthetic.main.item_user_info.view.*
 
 class FavoriteUsersInfoAdapter : RecyclerView.Adapter<FavoriteUsersInfoAdapter.BookmarksReposHolder>() {
 
@@ -16,7 +16,7 @@ class FavoriteUsersInfoAdapter : RecyclerView.Adapter<FavoriteUsersInfoAdapter.B
         }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): FavoriteUsersInfoAdapter.BookmarksReposHolder =
-        BookmarksReposHolder(LayoutInflater.from(p0.context).inflate(R.layout.item_user_repos, p0, false))
+        BookmarksReposHolder(LayoutInflater.from(p0.context).inflate(R.layout.item_user_info, p0, false))
 
     override fun getItemCount(): Int {
         return data.size
