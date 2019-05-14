@@ -11,7 +11,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 
-private var idRealm = 0
 
 class UserReposPresenter(
     view: UserInfoView,
@@ -23,6 +22,7 @@ class UserReposPresenter(
         Если вы прослушивали бесконечный поток нажатий кнопок, то это будет означать,
         что вы больше не хотите получать эти события,
         в таком случае можно удалить OnClickListener у View*/
+    private var idRealm = 0
     private var disposableGetUser: Disposable? = null
     private var disposableGetUserRepos: Disposable? = null
 
@@ -70,7 +70,9 @@ class UserReposPresenter(
                 realmInstance.executeTransaction { realm ->
                     realm.insertOrUpdate(RepoRealm().apply
                     {
-                        id = idRealm++
+                        val maxId = realmInstance.where(RepoRealm::class.java).max("id")
+                        idRealm = if (maxId == null) 1 else maxId.toInt() + 1
+                        id = idRealm
                         login = localLogin
                         name = user.name
                         location = user.location

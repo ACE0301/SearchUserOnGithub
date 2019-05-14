@@ -64,7 +64,7 @@ class UserInfoFragment : Fragment(), UserInfoView {
 
     override fun showUser(user: GithubUser) {
         val userInfo = "Имя пользователя ${user.name ?: "не указано"}, город: ${user.location ?: "не указан"}"
-        tvUserLastName.text = userInfo
+        tvUserLastName?.text = userInfo
     }
 
     override fun showUserRepos(userRepos: List<UserRepo>) {
