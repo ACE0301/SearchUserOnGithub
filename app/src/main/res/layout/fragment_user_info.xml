@@ -12,12 +12,12 @@
             android:text="@string/bookmarks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnToBookmarks"
+            android:id="@+id/btnToFavoritesFromUserInfo"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/rvUserReposList" app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintBottom_toTopOf="@+id/rvUserInfoList" app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintVertical_bias="0.0"/>
     <TextView
             android:id="@+id/tvUserLastName"
@@ -26,8 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/rvUserReposList" android:layout_marginTop="8dp"
-            app:layout_constraintVertical_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/btnToBookmarks"/>
+            app:layout_constraintBottom_toTopOf="@+id/rvUserInfoList" android:layout_marginTop="8dp"
+            app:layout_constraintVertical_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/btnToFavoritesFromUserInfo"/>
     <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,11 +41,11 @@
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintVertical_bias="0.968" app:layout_constraintTop_toBottomOf="@+id/rvUserReposList"/>
+            app:layout_constraintVertical_bias="0.968" app:layout_constraintTop_toBottomOf="@+id/rvUserInfoList"/>
 
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvUserReposList"
+            android:id="@+id/rvUserInfoList"
             android:layout_width="match_parent"
             android:layout_height="0dp" tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="120dp"

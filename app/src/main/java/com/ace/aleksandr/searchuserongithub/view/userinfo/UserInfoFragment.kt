@@ -12,7 +12,7 @@ import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
-import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUsersInfoFragment
+import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
 import kotlinx.android.synthetic.main.fragment_user_info.*
 
 class UserInfoFragment : Fragment(), UserInfoView {
@@ -42,7 +42,7 @@ class UserInfoFragment : Fragment(), UserInfoView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvUserReposList.apply {
+        rvUserInfoList.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = mAdapter
         }
@@ -53,11 +53,11 @@ class UserInfoFragment : Fragment(), UserInfoView {
         }
 
 
-        btnToBookmarks.setOnClickListener {
+        btnToFavoritesFromUserInfo.setOnClickListener {
             fragmentManager?.beginTransaction()
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUsersInfoFragment.TAG))
-                ?.addToBackStack(FavoriteUsersInfoFragment.TAG)
+                ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUserInfoFragment.TAG))
+                ?.addToBackStack(FavoriteUserInfoFragment.TAG)
                 ?.commit()
         }
     }

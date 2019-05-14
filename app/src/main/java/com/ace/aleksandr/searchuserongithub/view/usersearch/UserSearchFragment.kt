@@ -12,6 +12,7 @@ import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.GithubUserInfoSearchResult
 import com.ace.aleksandr.searchuserongithub.view.userinfo.UserInfoFragment
 import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
+import kotlinx.android.synthetic.main.fragment_user_info.*
 import kotlinx.android.synthetic.main.fragment_user_search.*
 
 class UserSearchFragment : Fragment(), UserSearchView {
@@ -47,7 +48,7 @@ class UserSearchFragment : Fragment(), UserSearchView {
         }
         pbLoading.isIndeterminate = true
 
-        btnToBookmarks.setOnClickListener {
+        btnToFavoritesFromUserSearch.setOnClickListener {
             fragmentManager?.beginTransaction()
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUsersFragment.TAG))

@@ -14,16 +14,10 @@ open class RepoRealm(
     var location: String? = null,
     var listOfRepos: RealmList<Repos>? = null
 ) : RealmObject()
-//
+
 open class Repos(
     var name: String? = null
-): RealmObject()
-//{
-//
-//    companion object {
-//        val FIELD_ID = "id"
-//    }
-//}
+) : RealmObject()
 
 
 

@@ -9,7 +9,7 @@ class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUs
     }
 
     private fun getUserFromRealm() {
-        view?.showUsersBookmarks()
+        view?.showFavoriteUsers()
     }
 
     override fun onDestroy() {

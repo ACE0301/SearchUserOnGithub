@@ -12,20 +12,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
-                    android:id="@+id/tvItemReposBookmarks"
+                    android:id="@+id/tvItemFavoriteUserInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Medium Text"
                     android:layout_marginStart="8dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
             <View
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_alignParentBottom="true"
                     android:background="#c0c0c0"/>
         </RelativeLayout>
         <View
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#c0c0c0"/>
     </android.support.v7.widget.CardView>

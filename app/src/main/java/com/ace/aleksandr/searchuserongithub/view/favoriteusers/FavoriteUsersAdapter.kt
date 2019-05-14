@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
 import kotlinx.android.synthetic.main.item_favorite_users.view.*
 
-class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.UserBookmarksHolder>() {
+class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.ItemHolder>() {
     var onItemClickListener: ((String) -> Unit) = {}
 
     var data: List<String> = emptyList()
@@ -16,8 +16,8 @@ class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.UserBookm
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserBookmarksHolder =
-        UserBookmarksHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder =
+        ItemHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.item_favorite_users,
                 parent,
@@ -27,14 +27,14 @@ class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.UserBookm
 
     override fun getItemCount(): Int = data.size
 
-    override fun onBindViewHolder(holder: UserBookmarksHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.bindData(data[position])
     }
 
-    inner class UserBookmarksHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(item: String) {
-            itemView.tvItemBookmarks.text = item
-            itemView.tvItemBookmarks.setOnClickListener {
+            itemView.tvItemFavoriteUsers.text = item
+            itemView.tvItemFavoriteUsers.setOnClickListener {
                 onItemClickListener.invoke(item)
             }
         }

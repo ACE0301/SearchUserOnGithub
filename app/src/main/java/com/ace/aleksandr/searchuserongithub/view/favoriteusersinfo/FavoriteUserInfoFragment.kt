@@ -10,29 +10,29 @@ import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.RepoRealm
 import io.realm.Realm
-import kotlinx.android.synthetic.main.fragment_favorite_users_info.*
+import kotlinx.android.synthetic.main.fragment_favorite_user_info.*
 
 
-class FavoriteUsersInfoFragment : Fragment(), FavoriteUsersInfoView {
+class FavoriteUserInfoFragment : Fragment(), FavoriteUserInfoView {
 
 
     companion object {
-        const val TAG = "FavoriteUsersInfoFragment"
+        const val TAG = "FavoriteUserInfoFragment"
 
         private const val ARGUMENT_USER_LOGIN = "ARGUMENT_USER_LOGIN"
 
-        fun newInstance(userLogin: String) = FavoriteUsersInfoFragment().apply {
+        fun newInstance(userLogin: String) = FavoriteUserInfoFragment().apply {
             arguments = Bundle().apply {
                 putString(ARGUMENT_USER_LOGIN, userLogin)
             }
         }
     }
 
-    private val presenter by lazy { FavoriteUsersInfoPresenter(this, arguments?.getString(ARGUMENT_USER_LOGIN) ?: "") }
-    private val mAdapter = FavoriteUsersInfoAdapter()
+    private val presenter by lazy { FavoriteUserInfoPresenter(this, arguments?.getString(ARGUMENT_USER_LOGIN) ?: "") }
+    private val mAdapter = FavoriteUserInfoAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_favorite_users_info, container, false)
+        inflater.inflate(R.layout.fragment_favorite_user_info, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -47,24 +47,23 @@ class FavoriteUsersInfoFragment : Fragment(), FavoriteUsersInfoView {
         }
     }
 
-    override fun showUserInfo(login1: String) {
+    override fun showUserInfo(login: String) {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
                 val user =
-                    inRealm.where(RepoRealm::class.java!!).equalTo("login", login1).findFirst()
+                    inRealm.where(RepoRealm::class.java!!).equalTo("login", login).findFirst()
                 val userInfo = "Имя пользователя ${user?.name ?: "не указано"}, город: ${user?.location ?: "не указан"}"
                 tvFavoriteUserLastName.text = userInfo
             }
         }
     }
 
-    override fun showUserRepos(userRepos: RepoRealm) {
+    override fun showUserRepos(login: String) {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
-                val users =
-                    inRealm.where(RepoRealm::class.java!!).equalTo("login", ARGUMENT_USER_LOGIN).findAll()
-                //поправить
-                //mAdapter.data = users.map { it.login.toString() }
+                val user =
+                    inRealm.where(RepoRealm::class.java!!).equalTo("login", login).findFirst()
+                mAdapter.data = user?.listOfRepos?.map { it.name ?: "отсутствует" }!!
             }
         }
     }

@@ -12,13 +12,10 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 
 private var idRealm = 0
-private var nameRealm: String? = null
-private var locationRealm: String? = null
-
 
 class UserReposPresenter(
     view: UserInfoView,
-    private val login1: String
+    private val localLogin: String
 ) : BasePresenter<UserInfoView>(view) {
     /*    Применительно к Observable тип Disposable позволяет вызывать метод dispose,
         означающий «Я закончил работать с этим ресурсом, мне больше не нужны данные».
@@ -40,7 +37,7 @@ class UserReposPresenter(
             disposableGetUser?.dispose()
         }
 
-        disposableGetUser = ApiHolder.service.getUser(login1)
+        disposableGetUser = ApiHolder.service.getUser(localLogin)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -56,7 +53,7 @@ class UserReposPresenter(
         if (disposableGetUserRepos != null && disposableGetUserRepos?.isDisposed == false) {
             disposableGetUserRepos?.dispose()
         }
-        disposableGetUserRepos = ApiHolder.service.getUserRepos(login1)
+        disposableGetUserRepos = ApiHolder.service.getUserRepos(localLogin)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -74,7 +71,7 @@ class UserReposPresenter(
                     realm.insertOrUpdate(RepoRealm().apply
                     {
                         id = idRealm++
-                        login = login1
+                        login = localLogin
                         name = user.name
                         location = user.location
                     })
@@ -97,7 +94,7 @@ class UserReposPresenter(
     fun saveRepos() {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
-                val users = inRealm.where(RepoRealm::class.java).equalTo("login", login1).findFirst()
+                val users = inRealm.where(RepoRealm::class.java).equalTo("login", localLogin).findFirst()
                 users?.isFavorite = true
             }
         }

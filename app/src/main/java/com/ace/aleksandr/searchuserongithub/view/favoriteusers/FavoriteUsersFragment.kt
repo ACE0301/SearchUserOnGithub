@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.RepoRealm
-import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUsersInfoFragment
+import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_favorite_users.*
 
@@ -36,7 +36,7 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvListOfUsersInBookmarks.apply {
+        rvFavoriteUsersList.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = mAdapter
         }
@@ -46,7 +46,7 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
     }
 
 
-    override fun showUsersBookmarks() {
+    override fun showFavoriteUsers() {
 
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
@@ -60,8 +60,8 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
     private fun openNewFragment(login: String) {
         fragmentManager?.beginTransaction()
             ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            ?.replace(R.id.content, FavoriteUsersInfoFragment.newInstance(login), FavoriteUsersInfoFragment.TAG)
-            ?.addToBackStack(FavoriteUsersInfoFragment.TAG)
+            ?.replace(R.id.content, FavoriteUserInfoFragment.newInstance(login), FavoriteUserInfoFragment.TAG)
+            ?.addToBackStack(FavoriteUserInfoFragment.TAG)
             ?.commit()
     }
 
