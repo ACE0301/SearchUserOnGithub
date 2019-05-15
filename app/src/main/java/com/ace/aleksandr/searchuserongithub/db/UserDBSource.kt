@@ -3,7 +3,6 @@ package com.ace.aleksandr.searchuserongithub.db
 import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
-import com.ace.aleksandr.searchuserongithub.model.UserRepository
 import io.realm.Realm
 import io.realm.RealmList
 
@@ -25,7 +24,7 @@ class UserDbSource : IUserDBSource {
     }
 
     override fun saveUser(user: UserRealm) {
-            Realm.getDefaultInstance()
+        Realm.getDefaultInstance()
             .use { realmInstance ->
                 realmInstance.executeTransaction { realm ->
                     realm.insertOrUpdate(user)
@@ -40,7 +39,7 @@ class UserDbSource : IUserDBSource {
                     .equalTo("login", login)
                     .findFirst().let {
                         var user = it
-                        user?.listOfRepos = repositories as RealmList<UserRepository>
+                        //user?.listOfRepos = repositories
                         inRealm.insertOrUpdate(user)
                     }
             }

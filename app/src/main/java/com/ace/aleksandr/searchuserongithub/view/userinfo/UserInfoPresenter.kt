@@ -20,7 +20,7 @@ class UserReposPresenter(
         Если вы прослушивали бесконечный поток нажатий кнопок, то это будет означать,
         что вы больше не хотите получать эти события,
         в таком случае можно удалить OnClickListener у View*/
-    private var idRealm = 0
+    private var repositories: List<String>? = null
     private var disposableGetUser: Disposable? = null
     private var disposableGetUserRepos: Disposable? = null
 
@@ -60,7 +60,7 @@ class UserReposPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.showUserRepos(it)
-                //UserDbSource().saveRepositories(localLogin, UserRealm().listOfRepos)
+                UserDbSource().saveRepositories(localLogin, it.map { it.name })
             }, {
                 view?.showError(it.message ?: "")
             })
