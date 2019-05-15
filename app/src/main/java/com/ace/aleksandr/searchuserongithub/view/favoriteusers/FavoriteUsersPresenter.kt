@@ -1,6 +1,7 @@
 package com.ace.aleksandr.searchuserongithub.view.favoriteusers
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
+import com.ace.aleksandr.searchuserongithub.db.UserDbSource
 
 
 class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUsersView>(view) {
@@ -9,6 +10,7 @@ class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUs
     }
 
     private fun getUserFromRealm() {
+        //var user = UserDbSource().getUser("login")
         view?.showFavoriteUsers()
     }
 

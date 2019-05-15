@@ -8,8 +8,9 @@ package com.ace.aleksandr.searchuserongithub.model
 
 
 data class GithubUser(
-    var id: Int? = null,
+    //var id: Int? = null,
     var name: String? = null,
     var location: String? = null
+    //var repositories: UserRealm? = null
 )
 

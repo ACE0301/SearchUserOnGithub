@@ -2,10 +2,8 @@ package com.ace.aleksandr.searchuserongithub.view.userinfo
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
-import com.ace.aleksandr.searchuserongithub.model.GithubUser
-import com.ace.aleksandr.searchuserongithub.model.RepoRealm
-import com.ace.aleksandr.searchuserongithub.model.Repos
-import com.ace.aleksandr.searchuserongithub.model.UserRepo
+import com.ace.aleksandr.searchuserongithub.db.UserDbSource
+import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -42,7 +40,11 @@ class UserReposPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.showUser(it)
-                saveToRealm(it)
+                UserDbSource().saveUser(UserRealm().apply {
+                    login = localLogin
+                    name = it.name
+                    location = it.location
+                })
             }, {
                 view?.showError(it.message ?: "")
 
@@ -58,45 +60,45 @@ class UserReposPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.showUserRepos(it)
-                addReposToRealm(it)
+                //UserDbSource().saveRepositories(localLogin, UserRealm().listOfRepos)
             }, {
                 view?.showError(it.message ?: "")
             })
     }
 
-    private fun saveToRealm(user: GithubUser) {
-        Realm.getDefaultInstance()
-            .use { realmInstance ->
-                realmInstance.executeTransaction { realm ->
-                    realm.insertOrUpdate(RepoRealm().apply
-                    {
-                        val maxId = realmInstance.where(RepoRealm::class.java).max("id")
-                        idRealm = if (maxId == null) 1 else maxId.toInt() + 1
-                        id = idRealm
-                        login = localLogin
-                        name = user.name
-                        location = user.location
-                    })
-                }
-            }
-    }
-
-    private fun addReposToRealm(repos: List<UserRepo>) {
-
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction { inRealm ->
-                val users = inRealm.where(RepoRealm::class.java).equalTo("id", idRealm).findFirst()
-                realm.insertOrUpdate(RepoRealm().apply {
-                    users?.listOfRepos?.addAll(repos.map { Repos(it.name) })
-                })
-            }
-        }
-    }
+//    private fun saveToRealm(user: GithubUser) {
+//        Realm.getDefaultInstance()
+//            .use { realmInstance ->
+//                realmInstance.executeTransaction { realm ->
+//                    realm.insertOrUpdate(UserRealm().apply
+//                    {
+//                        val maxId = realmInstance.where(UserRealm::class.java).max("id")
+//                        idRealm = if (maxId == null) 1 else maxId.toInt() + 1
+//                        id = idRealm
+//                        login = localLogin
+//                        name = user.name
+//                        location = user.location
+//                    })
+//                }
+//            }
+//    }
+//
+//    private fun addReposToRealm(repos: List<UserRepo>) {
+//
+//        Realm.getDefaultInstance().use { realm ->
+//            realm.executeTransaction { inRealm ->
+//                val users = inRealm.where(UserRealm::class.java).equalTo("id", idRealm).findFirst()
+//                realm.insertOrUpdate(UserRealm().apply {
+//                    users?.listOfRepos?.addAll(repos.map { UserRepository(it.name) })
+//                })
+//            }
+//        }
+//    }
 
     fun saveRepos() {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
-                val users = inRealm.where(RepoRealm::class.java).equalTo("login", localLogin).findFirst()
+                val users = inRealm.where(UserRealm::class.java).equalTo("login", localLogin).findFirst()
                 users?.isFavorite = true
             }
         }

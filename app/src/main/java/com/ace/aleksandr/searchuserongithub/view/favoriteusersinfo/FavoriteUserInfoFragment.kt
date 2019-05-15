@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
-import com.ace.aleksandr.searchuserongithub.model.RepoRealm
+import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_favorite_user_info.*
 
@@ -51,7 +51,7 @@ class FavoriteUserInfoFragment : Fragment(), FavoriteUserInfoView {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
                 val user =
-                    inRealm.where(RepoRealm::class.java!!).equalTo("login", login).findFirst()
+                    inRealm.where(UserRealm::class.java!!).equalTo("login", login).findFirst()
                 val userInfo = "Имя пользователя ${user?.name ?: "не указано"}, город: ${user?.location ?: "не указан"}"
                 tvFavoriteUserLastName.text = userInfo
             }
@@ -62,7 +62,7 @@ class FavoriteUserInfoFragment : Fragment(), FavoriteUserInfoView {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
                 val user =
-                    inRealm.where(RepoRealm::class.java!!).equalTo("login", login).findFirst()
+                    inRealm.where(UserRealm::class.java!!).equalTo("login", login).findFirst()
                 mAdapter.data = user?.listOfRepos?.map { it.name ?: "отсутствует" }!!
             }
         }

@@ -5,17 +5,16 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 
-open class RepoRealm(
-    @PrimaryKey
-    var id: Int? = 0,
+open class UserRealm(
     var isFavorite: Boolean = false,
+    @PrimaryKey
     var login: String? = null,
     var name: String? = null,
     var location: String? = null,
-    var listOfRepos: RealmList<Repos>? = null
+    var listOfRepos: RealmList<UserRepository>? = null
 ) : RealmObject()
 
-open class Repos(
+open class UserRepository(
     var name: String? = null
 ) : RealmObject()
 

@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ace.aleksandr.searchuserongithub.R
-import com.ace.aleksandr.searchuserongithub.model.RepoRealm
+import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_favorite_users.*
@@ -51,7 +51,7 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
                 val users =
-                    inRealm.where(RepoRealm::class.java!!).equalTo("isFavorite", true).findAll()
+                    inRealm.where(UserRealm::class.java!!).equalTo("isFavorite", true).findAll()
                 mAdapter.data = users.map { it.login.toString() }
             }
         }
