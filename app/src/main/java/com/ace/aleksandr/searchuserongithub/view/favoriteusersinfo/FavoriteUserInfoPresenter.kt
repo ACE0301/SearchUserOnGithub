@@ -1,6 +1,7 @@
 package com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
+import com.ace.aleksandr.searchuserongithub.db.UserDbSource
 
 class FavoriteUserInfoPresenter(
     view: FavoriteUserInfoView,
@@ -12,7 +13,8 @@ class FavoriteUserInfoPresenter(
 
     private fun getReposFromRealm(login: String) {
         view?.apply {
-            showUserInfo(login)
+
+            showUserInfo(UserDbSource().getUser(login))
             showUserRepos(login)
         }
     }

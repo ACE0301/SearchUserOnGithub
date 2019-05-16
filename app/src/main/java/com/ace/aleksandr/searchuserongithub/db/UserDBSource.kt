@@ -5,7 +5,6 @@ import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import com.ace.aleksandr.searchuserongithub.model.UserRepository
 import io.realm.Realm
-import io.realm.RealmList
 
 interface IUserDBSource {
     fun getUser(login: String): UserRealm
@@ -20,8 +19,16 @@ interface IUserDBSource {
 }
 
 class UserDbSource : IUserDBSource {
+
     override fun getUser(login: String): UserRealm {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var user = UserRealm()
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction { inRealm ->
+                user = inRealm.where(UserRealm::class.java).equalTo("login", login).findFirst()
+                    ?: UserRealm()
+            }
+        }
+        return user
     }
 
     override fun saveUser(user: GithubUser, localLogin: String) {
@@ -54,9 +61,9 @@ class UserDbSource : IUserDBSource {
                 realm.insertOrUpdate(UserRealm().apply {
                     users?.listOfRepos?.addAll(repositories.map { UserRepository(it.name) })
                 })
-                    }
             }
         }
+    }
 
     override fun getFavoriteUsers(): List<UserRealm> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -69,14 +76,6 @@ class UserDbSource : IUserDBSource {
                 users?.isFavorite = true
             }
         }
-    }
-
-    fun saveToRealm(user: GithubUser, localLogin: String) {
-
-    }
-
-    fun addReposToRealm(repos: List<UserRepo>) {
-
     }
 
 

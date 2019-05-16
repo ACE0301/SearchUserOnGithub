@@ -47,16 +47,12 @@ class FavoriteUserInfoFragment : Fragment(), FavoriteUserInfoView {
         }
     }
 
-    override fun showUserInfo(login: String) {
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction { inRealm ->
-                val user =
-                    inRealm.where(UserRealm::class.java!!).equalTo("login", login).findFirst()
+    override fun showUserInfo(user: UserRealm) {
+
                 val userInfo = "Имя пользователя ${user?.name ?: "не указано"}, город: ${user?.location ?: "не указан"}"
                 tvFavoriteUserLastName.text = userInfo
             }
-        }
-    }
+
 
     override fun showUserRepos(login: String) {
         Realm.getDefaultInstance().use { realm ->
