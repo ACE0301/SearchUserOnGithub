@@ -15,20 +15,25 @@ interface IUserDBSource {
 
     fun getFavoriteUsers(): List<UserRealm>
 
+    fun deleteFavoriteUser(login: String)
+
     fun makeFavorite(login: String)
 }
 
 class UserDbSource : IUserDBSource {
 
+    override fun deleteFavoriteUser(login: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getUser(login: String): UserRealm {
-        var user = UserRealm()
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction { inRealm ->
-                user = inRealm.where(UserRealm::class.java).equalTo("login", login).findFirst()
-                    ?: UserRealm()
+        return UserRealm().apply {
+            Realm.getDefaultInstance().use { realm ->
+                realm.executeTransaction { inRealm ->
+                    inRealm.where(UserRealm::class.java).equalTo("login", login).findFirst()
+                }
             }
         }
-        return user
     }
 
     override fun saveUser(user: GithubUser, localLogin: String) {

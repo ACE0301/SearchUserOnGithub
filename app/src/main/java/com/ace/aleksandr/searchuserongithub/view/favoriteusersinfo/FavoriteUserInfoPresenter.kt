@@ -11,12 +11,12 @@ class FavoriteUserInfoPresenter(
         getReposFromRealm(login)
     }
 
-    private fun getReposFromRealm(login: String) {
+    private fun getReposFromRealm(login: String){
         view?.apply {
-
             showUserInfo(UserDbSource().getUser(login))
-            showUserRepos(login)
+            //showUserRepos(UserDbSource().getFavoriteUserRepositories(login))
         }
+
     }
 
     override fun onDestroy() {
