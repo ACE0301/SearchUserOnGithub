@@ -3,6 +3,7 @@ package com.ace.aleksandr.searchuserongithub.view.userinfo
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
 import com.ace.aleksandr.searchuserongithub.db.UserDbSource
+import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -40,11 +41,8 @@ class UserReposPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.showUser(it)
-                UserDbSource().saveUser(UserRealm().apply {
-                    login = localLogin
-                    name = it.name
-                    location = it.location
-                })
+                UserDbSource().saveUser(it, localLogin)
+                //saveToRealm(it)
             }, {
                 view?.showError(it.message ?: "")
 
@@ -60,28 +58,28 @@ class UserReposPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.showUserRepos(it)
-                UserDbSource().saveRepositories(localLogin, it.map { it.name })
+                UserDbSource().saveRepositories(localLogin, it)
             }, {
                 view?.showError(it.message ?: "")
             })
     }
 
-//    private fun saveToRealm(user: GithubUser) {
-//        Realm.getDefaultInstance()
-//            .use { realmInstance ->
-//                realmInstance.executeTransaction { realm ->
-//                    realm.insertOrUpdate(UserRealm().apply
-//                    {
-//                        val maxId = realmInstance.where(UserRealm::class.java).max("id")
-//                        idRealm = if (maxId == null) 1 else maxId.toInt() + 1
-//                        id = idRealm
-//                        login = localLogin
-//                        name = user.name
-//                        location = user.location
-//                    })
-//                }
-//            }
-//    }
+    private fun saveToRealm(user: GithubUser) {
+        Realm.getDefaultInstance()
+            .use { realmInstance ->
+                realmInstance.executeTransaction { realm ->
+                    realm.insertOrUpdate(UserRealm().apply
+                    {
+                        val maxId = realmInstance.where(UserRealm::class.java).max("id")
+                        var idRealm = if (maxId == null) 1 else maxId.toInt() + 1
+                        id = idRealm
+                        login = localLogin
+                        name = user.name
+                        location = user.location
+                    })
+                }
+            }
+    }
 //
 //    private fun addReposToRealm(repos: List<UserRepo>) {
 //
@@ -96,12 +94,7 @@ class UserReposPresenter(
 //    }
 
     fun saveRepos() {
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction { inRealm ->
-                val users = inRealm.where(UserRealm::class.java).equalTo("login", localLogin).findFirst()
-                users?.isFavorite = true
-            }
-        }
+        UserDbSource().makeFavorite(localLogin)
     }
 
 
