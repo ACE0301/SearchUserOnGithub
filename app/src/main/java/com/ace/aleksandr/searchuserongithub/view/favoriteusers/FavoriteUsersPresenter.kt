@@ -15,6 +15,11 @@ class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUs
         view?.showFavoriteUsers(UserDbSource().getFavoriteUsers())
     }
 
+    fun onRemoveClick(login: String) {
+        UserDbSource().deleteFavoriteUser(login)
+        view?.showFavoriteUsers(UserDbSource().getFavoriteUsers())
+    }
+
     override fun onDestroy() {
         //realm.close()
     }

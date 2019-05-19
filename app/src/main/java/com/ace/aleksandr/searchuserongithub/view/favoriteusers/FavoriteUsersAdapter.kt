@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.item_favorite_users.view.*
 
 class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.ItemHolder>() {
     var onItemClickListener: ((String) -> Unit) = {}
+    var onRemoveClick: ((String) -> Unit) = {}
 
     var data: List<String> = emptyList()
         set(value) {
@@ -32,6 +33,13 @@ class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.ItemHolde
     }
 
     inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        init {
+            itemView.ivRemove.setOnClickListener {
+                onRemoveClick.invoke(data[adapterPosition])
+            }
+        }
+
         fun bindData(item: String) {
             itemView.tvItemFavoriteUsers.text = item
             itemView.tvItemFavoriteUsers.setOnClickListener {
@@ -39,4 +47,5 @@ class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.ItemHolde
             }
         }
     }
+
 }

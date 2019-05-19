@@ -42,6 +42,10 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
         mAdapter.onItemClickListener = {
             openNewFragment(it)
         }
+        mAdapter.onRemoveClick = {login ->
+            presenter.onRemoveClick(login)
+
+        }
     }
 
 
@@ -58,6 +62,10 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
     }
 
     override fun showError(errorText: String) {
+    }
+
+    override fun removeUser() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onDestroy() {
