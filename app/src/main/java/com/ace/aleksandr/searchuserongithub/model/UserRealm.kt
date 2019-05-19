@@ -7,7 +7,6 @@ import io.realm.annotations.PrimaryKey
 
 open class UserRealm(
     @PrimaryKey
-    var id: Int? = null,
     var login: String? = null,
     var isFavorite: Boolean? = null,
     var name: String? = null,

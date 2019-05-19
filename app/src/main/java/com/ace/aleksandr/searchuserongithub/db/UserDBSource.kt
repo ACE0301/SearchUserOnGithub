@@ -41,14 +41,17 @@ class UserDbSource : IUserDBSource {
         Realm.getDefaultInstance()
             .use { realmInstance ->
                 realmInstance.executeTransaction { realm ->
+                    val thisUser = realm.where(UserRealm::class.java)
+                        .equalTo("login", localLogin).findFirst()
                     realm.insertOrUpdate(UserRealm().apply
                     {
-                        val maxId = realmInstance.where(UserRealm::class.java).max("id")
-                        var idRealm = if (maxId == null) 1 else maxId.toInt() + 1
-                        id = idRealm
+                        //val maxId = realmInstance.where(UserRealm::class.java).max("id")
+                        //var idRealm = if (maxId == null) 1 else maxId.toInt() + 1
+                        //id = idRealm
                         login = localLogin
                         name = user.name
                         location = user.location
+                        isFavorite = thisUser?.isFavorite ?: false
                     })
                 }
             }
