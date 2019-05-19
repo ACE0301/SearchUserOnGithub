@@ -24,11 +24,13 @@ interface IUserDBSource {
 class UserDbSource : IUserDBSource {
 
     override fun deleteFavoriteUser(login: String) {
+
+
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getUser(login: String): UserRealm {
-        var user = UserRealm()
+        lateinit var user: UserRealm
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
                 user = inRealm.where(UserRealm::class.java).equalTo("login", login).findFirst()
@@ -46,9 +48,6 @@ class UserDbSource : IUserDBSource {
                         .equalTo("login", localLogin).findFirst()
                     realm.insertOrUpdate(UserRealm().apply
                     {
-                        //val maxId = realmInstance.where(UserRealm::class.java).max("id")
-                        //var idRealm = if (maxId == null) 1 else maxId.toInt() + 1
-                        //id = idRealm
                         login = localLogin
                         name = user.name
                         location = user.location
@@ -56,12 +55,6 @@ class UserDbSource : IUserDBSource {
                     })
                 }
             }
-//        Realm.getDefaultInstance()
-//            .use { realmInstance ->
-//                realmInstance.executeTransaction { realm ->
-//                    realm.insertOrUpdate(user)
-//                }
-//            }
     }
 
     override fun saveRepositories(login: String?, repositories: List<UserRepo>) {
@@ -84,14 +77,6 @@ class UserDbSource : IUserDBSource {
         }
         return users
     }
-
-//    Realm.getDefaultInstance().use { realm ->
-//        realm.executeTransaction { inRealm ->
-//            val users =
-//                inRealm.where(UserRealm::class.java!!).equalTo("isFavorite", true).findAll()
-//            mAdapter.data = users.map { it.login.toString() }
-//        }
-//    }
 
     override fun makeFavorite(login: String) {
         Realm.getDefaultInstance().use { realm ->

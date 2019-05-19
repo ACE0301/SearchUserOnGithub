@@ -19,7 +19,7 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
 
     companion object {
         const val TAG = "FavoriteUsersFragment"
-        //fun newInstance(tag: String) = FavoriteUsersFragment()
+        fun newInstance(tag: String) = FavoriteUsersFragment()
     }
 
     private val presenter by lazy { FavoriteUsersPresenter(this) }
