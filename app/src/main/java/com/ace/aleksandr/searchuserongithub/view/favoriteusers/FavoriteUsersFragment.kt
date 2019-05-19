@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
@@ -42,15 +43,15 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
         mAdapter.onItemClickListener = {
             openNewFragment(it)
         }
-        mAdapter.onRemoveClick = {login ->
+        mAdapter.onRemoveClick = { login ->
             presenter.onRemoveClick(login)
-
+            Toast.makeText(this.context, "Удалено", Toast.LENGTH_SHORT).show()
         }
     }
 
 
     override fun showFavoriteUsers(users: RealmResults<UserRealm>) {
-            mAdapter.data = users.map { it.login.toString() }
+        mAdapter.data = users.map { it.login.toString() }
     }
 
     private fun openNewFragment(login: String) {
@@ -64,9 +65,9 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
     override fun showError(errorText: String) {
     }
 
-    override fun removeUser() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+//    override fun removeUser() {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

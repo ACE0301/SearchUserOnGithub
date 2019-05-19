@@ -7,6 +7,7 @@ import com.ace.aleksandr.searchuserongithub.model.UserRepository
 import io.realm.Realm
 import io.realm.RealmResults
 
+
 interface IUserDBSource {
     fun getUser(login: String): UserRealm
 
@@ -24,9 +25,12 @@ interface IUserDBSource {
 class UserDbSource : IUserDBSource {
 
     override fun deleteFavoriteUser(login: String) {
-
-
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction { inRealm ->
+                val rows = realm.where(UserRealm::class.java).equalTo("login", login).findAll()
+                rows.deleteFirstFromRealm()
+            }
+        }
     }
 
     override fun getUser(login: String): UserRealm {

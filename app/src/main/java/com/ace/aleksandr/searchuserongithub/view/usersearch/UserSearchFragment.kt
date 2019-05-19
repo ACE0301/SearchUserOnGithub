@@ -10,9 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.GithubUserInfoSearchResult
-import com.ace.aleksandr.searchuserongithub.view.userinfo.UserInfoFragment
 import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
-import kotlinx.android.synthetic.main.fragment_user_info.*
+import com.ace.aleksandr.searchuserongithub.view.userinfo.UserInfoFragment
 import kotlinx.android.synthetic.main.fragment_user_search.*
 
 class UserSearchFragment : Fragment(), UserSearchView {
@@ -41,7 +40,11 @@ class UserSearchFragment : Fragment(), UserSearchView {
             adapter = mAdapter
         }
         btnSearch.setOnClickListener {
-            presenter.getUserInfo(etSearch.text.toString())
+            if (etSearch.text.isEmpty()) {
+                etSearch.error = "Логин не может быть пустой!"
+            } else {
+                presenter.getUserInfo(etSearch.text.toString())
+            }
         }
         mAdapter.onItemClickListener = {
             openNewFragment(it)
