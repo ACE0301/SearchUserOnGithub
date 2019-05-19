@@ -11,6 +11,7 @@ import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
 import io.realm.Realm
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_favorite_users.*
 
 class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
@@ -18,9 +19,7 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
 
     companion object {
         const val TAG = "FavoriteUsersFragment"
-
-        fun newInstance(tag: String) = FavoriteUsersFragment()
-
+        //fun newInstance(tag: String) = FavoriteUsersFragment()
     }
 
     private val presenter by lazy { FavoriteUsersPresenter(this) }
@@ -46,15 +45,8 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
     }
 
 
-    override fun showFavoriteUsers() {
-
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction { inRealm ->
-                val users =
-                    inRealm.where(UserRealm::class.java!!).equalTo("isFavorite", true).findAll()
-                mAdapter.data = users.map { it.login.toString() }
-            }
-        }
+    override fun showFavoriteUsers(users: RealmResults<UserRealm>) {
+            mAdapter.data = users.map { it.login.toString() }
     }
 
     private fun openNewFragment(login: String) {

@@ -5,6 +5,7 @@ import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import com.ace.aleksandr.searchuserongithub.model.UserRepository
 import io.realm.Realm
+import io.realm.RealmResults
 
 interface IUserDBSource {
     fun getUser(login: String): UserRealm
@@ -13,7 +14,7 @@ interface IUserDBSource {
 
     fun saveRepositories(login: String?, repositories: List<UserRepo>)
 
-    fun getFavoriteUsers(): List<UserRealm>
+    fun getFavoriteUsers(): RealmResults<UserRealm>
 
     fun deleteFavoriteUser(login: String)
 
@@ -74,9 +75,23 @@ class UserDbSource : IUserDBSource {
         }
     }
 
-    override fun getFavoriteUsers(): List<UserRealm> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getFavoriteUsers(): RealmResults<UserRealm> {
+        lateinit var users: RealmResults<UserRealm>
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction { inRealm ->
+                users = inRealm.where(UserRealm::class.java).equalTo("isFavorite", true).findAll()
+            }
+        }
+        return users
     }
+
+//    Realm.getDefaultInstance().use { realm ->
+//        realm.executeTransaction { inRealm ->
+//            val users =
+//                inRealm.where(UserRealm::class.java!!).equalTo("isFavorite", true).findAll()
+//            mAdapter.data = users.map { it.login.toString() }
+//        }
+//    }
 
     override fun makeFavorite(login: String) {
         Realm.getDefaultInstance().use { realm ->
