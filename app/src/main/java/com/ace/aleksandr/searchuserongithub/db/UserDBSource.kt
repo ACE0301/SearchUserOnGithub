@@ -26,7 +26,7 @@ class UserDbSource : IUserDBSource {
 
     override fun deleteFavoriteUser(login: String) {
         Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction { inRealm ->
+            realm.executeTransaction {
                 val rows = realm.where(UserRealm::class.java).equalTo("login", login).findAll()
                 rows.deleteFirstFromRealm()
             }
@@ -90,48 +90,4 @@ class UserDbSource : IUserDBSource {
             }
         }
     }
-
-
-//    private var mRealmConfiguration: RealmConfiguration? = null
-//    val users: Single<List<UserRealm>>
-//        get() {
-//            val realm = Realm.getInstance(mRealmConfiguration)
-//            val users = realm.copyFromRealm(realm.where(UserRealm::class.java).findAll())
-//            realm.close()
-//            return Single.just(users)
-//        }
-//
-//    init {
-//        //mRealmConfiguration = CustomApplication.getUserConfiguration()
-//    }
-//
-//    fun getUser(id: Long): Single<UserRealm> {
-//        val realm = Realm.getInstance(mRealmConfiguration)
-//        var user: UserRealm? = null
-//        val realmUser = realm.where(UserRealm::class.java).equalTo("id", id).findFirst()
-//        if (realmUser != null) {
-//            user = realm.copyFromRealm(realmUser)
-//        }
-//        realm.close()
-//        return Single.just(user)
-//    }
-//
-//    fun updateUsers(users: List<UserRealm>): Completable {
-//        return Completable.fromAction {
-//            val realm = Realm.getInstance(mRealmConfiguration)
-//            realm.insertOrUpdate(users)
-//            realm.close()
-//            Realm.compactRealm(mRealmConfiguration)
-//        }
-//    }
-//
-//    fun updateUser(user: UserRealm): Completable {
-//        return Completable.fromAction {
-//            val realm = Realm.getInstance(mRealmConfiguration)
-//            realm.insertOrUpdate(user)
-//            realm.close()
-//            Realm.compactRealm(mRealmConfiguration)
-//        }
-//    }
-
 }

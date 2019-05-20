@@ -5,6 +5,5 @@ import io.realm.RealmResults
 
 interface FavoriteUsersView {
     fun showFavoriteUsers(users: RealmResults<UserRealm>)
-    //fun showUserRepos(userRepos: List<UserRepo>)
     fun showError(errorText: String)
 }

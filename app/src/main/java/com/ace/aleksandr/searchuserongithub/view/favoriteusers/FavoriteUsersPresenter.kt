@@ -1,9 +1,7 @@
 package com.ace.aleksandr.searchuserongithub.view.favoriteusers
 
-import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.db.UserDbSource
-import com.ace.aleksandr.searchuserongithub.model.UserRealm
 
 
 class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUsersView>(view) {

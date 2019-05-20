@@ -26,7 +26,6 @@ class FavoriteUserInfoAdapter : RecyclerView.Adapter<FavoriteUserInfoAdapter.Ite
         holder.bindData(data[position])
     }
 
-
     inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(item: String) {
             itemView.tvItemFavoriteUserInfo.text = item

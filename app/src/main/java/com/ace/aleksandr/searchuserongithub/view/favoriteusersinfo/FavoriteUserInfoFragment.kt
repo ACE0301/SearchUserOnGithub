@@ -52,7 +52,6 @@ class FavoriteUserInfoFragment : Fragment(), FavoriteUserInfoView {
         mAdapter.data = user.listOfRepos?.map { it.name ?: "отсутствует" } ?: emptyList()
     }
 
-
     override fun showError(errorText: String) {
         Toast.makeText(activity, errorText, Toast.LENGTH_SHORT).show()
     }
