@@ -52,11 +52,7 @@ class UserSearchFragment : Fragment(), UserSearchView {
         pbLoading.isIndeterminate = true
 
         btnToFavoritesFromUserSearch.setOnClickListener {
-            fragmentManager?.beginTransaction()
-                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUsersFragment.TAG))
-                ?.addToBackStack(FavoriteUsersFragment.TAG)
-                ?.commit()
+            openFavoritesFragment()
         }
     }
 
@@ -81,6 +77,14 @@ class UserSearchFragment : Fragment(), UserSearchView {
             ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             ?.replace(R.id.content, UserInfoFragment.newInstance(login), UserInfoFragment.TAG)
             ?.addToBackStack(UserInfoFragment.TAG)
+            ?.commit()
+    }
+
+    private fun openFavoritesFragment() {
+        fragmentManager?.beginTransaction()
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUsersFragment.TAG))
+            ?.addToBackStack(FavoriteUsersFragment.TAG)
             ?.commit()
     }
 

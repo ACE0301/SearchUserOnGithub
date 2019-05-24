@@ -85,8 +85,11 @@ class UserDbSource : IUserDBSource {
     override fun makeFavorite(login: String) {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
-                val users = inRealm.where(UserRealm::class.java).equalTo("login", login).findFirst()
-                users?.isFavorite = true
+                inRealm.where(UserRealm::class.java)
+                    .equalTo(UserRealm.LOGIN, login)
+                    .findFirst()?.let {
+                        it.isFavorite = true
+                    }
             }
         }
     }
