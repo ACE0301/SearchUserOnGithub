@@ -12,7 +12,12 @@ open class UserRealm(
     var name: String? = null,
     var location: String? = null,
     var listOfRepos: RealmList<UserRepository>? = null
-) : RealmObject()
+) : RealmObject() {
+
+    companion object {
+        const val LOGIN = "login"
+    }
+}
 
 open class UserRepository(
     var name: String? = null

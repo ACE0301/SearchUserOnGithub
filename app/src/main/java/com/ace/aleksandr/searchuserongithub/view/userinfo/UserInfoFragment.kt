@@ -54,12 +54,16 @@ class UserInfoFragment : Fragment(), UserInfoView {
 
 
         btnToFavoritesFromUserInfo.setOnClickListener {
-            fragmentManager?.beginTransaction()
-                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUserInfoFragment.TAG))
-                ?.addToBackStack(FavoriteUserInfoFragment.TAG)
-                ?.commit()
+            openFavoriteUsersFragment()
         }
+    }
+
+    private fun openFavoriteUsersFragment() {
+        fragmentManager?.beginTransaction()
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUserInfoFragment.TAG))
+            ?.addToBackStack(FavoriteUserInfoFragment.TAG)
+            ?.commit()
     }
 
     override fun showUser(user: GithubUser) {
