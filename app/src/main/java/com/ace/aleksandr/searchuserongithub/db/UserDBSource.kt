@@ -4,12 +4,14 @@ import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import com.ace.aleksandr.searchuserongithub.model.UserRepository
+import io.reactivex.Completable
+import io.reactivex.Single
 import io.realm.Realm
 import io.realm.RealmResults
 
 
 interface IUserDBSource {
-    fun getUser(login: String): UserRealm
+    fun getUser(login: String): Single<UserRealm>
 
     fun saveUser(user: GithubUser, localLogin: String)
 
@@ -17,14 +19,26 @@ interface IUserDBSource {
 
     fun getFavoriteUsers(): RealmResults<UserRealm>
 
-    fun deleteFavoriteUser(login: String)
+    fun deleteFavoriteUser(login: String): Completable
 
     fun makeFavorite(login: String)
 }
 
 class UserDbSource : IUserDBSource {
 
-    override fun deleteFavoriteUser(login: String) {
+
+    override fun getUser(login: String): Single<UserRealm> {
+        lateinit var user: UserRealm
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction { inRealm ->
+                user = inRealm.where(UserRealm::class.java).equalTo("login", login).findFirst()
+                    ?: UserRealm()
+            }
+        }
+        return Single.just(user)
+    }
+
+    override fun deleteFavoriteUser(login: String) = Completable.fromAction {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction {
                 val rows = realm.where(UserRealm::class.java).equalTo("login", login).findAll()
@@ -33,16 +47,6 @@ class UserDbSource : IUserDBSource {
         }
     }
 
-    override fun getUser(login: String): UserRealm {
-        lateinit var user: UserRealm
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction { inRealm ->
-                user = inRealm.where(UserRealm::class.java).equalTo("login", login).findFirst()
-                    ?: UserRealm()
-            }
-        }
-        return user
-    }
 
     override fun saveUser(user: GithubUser, localLogin: String) {
         Realm.getDefaultInstance()

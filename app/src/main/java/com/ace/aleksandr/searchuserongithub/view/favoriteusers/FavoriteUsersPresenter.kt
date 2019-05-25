@@ -2,24 +2,34 @@ package com.ace.aleksandr.searchuserongithub.view.favoriteusers
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.db.UserDbSource
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 
 class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUsersView>(view) {
+    var disposable: Disposable? = null
+
     override fun onCreate() {
         getUserFromRealm()
     }
 
     private fun getUserFromRealm() {
-        //var user = UserDbSource().getUser("login")
         view?.showFavoriteUsers(UserDbSource().getFavoriteUsers())
     }
 
     fun onRemoveClick(login: String) {
-        UserDbSource().deleteFavoriteUser(login)
-        view?.showFavoriteUsers(UserDbSource().getFavoriteUsers())
+        disposable = UserDbSource().deleteFavoriteUser(login)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                view?.showFavoriteUsers(UserDbSource().getFavoriteUsers())
+            }, {
+                view?.showError("Ошибка!")
+            })
     }
 
     override fun onDestroy() {
-        //realm.close()
+        disposable?.dispose()
     }
 }
