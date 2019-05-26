@@ -49,7 +49,6 @@ class UserInfoFragment : Fragment(), UserInfoView {
 
         fabSave.setOnClickListener {
             presenter.saveRepos()
-            Toast.makeText(this.activity, "Добавлено в закладки", Toast.LENGTH_LONG).show()
         }
 
 
@@ -75,7 +74,7 @@ class UserInfoFragment : Fragment(), UserInfoView {
         mAdapter.data = userRepos.map { it.name ?: "отсутствует" }
     }
 
-    override fun showError(errorText: String) {
-        Toast.makeText(activity, errorText, Toast.LENGTH_SHORT).show()
+    override fun showResult(resultText: String) {
+        Toast.makeText(activity, resultText, Toast.LENGTH_SHORT).show()
     }
 }

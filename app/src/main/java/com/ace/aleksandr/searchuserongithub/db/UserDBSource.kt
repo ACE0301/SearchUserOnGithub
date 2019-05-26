@@ -7,25 +7,24 @@ import com.ace.aleksandr.searchuserongithub.model.UserRepository
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.realm.Realm
-import io.realm.RealmResults
 
 
 interface IUserDBSource {
+
     fun getUser(login: String): Single<UserRealm>
 
     fun saveUser(user: GithubUser, localLogin: String)
 
     fun saveRepositories(login: String?, repositories: List<UserRepo>)
 
-    fun getFavoriteUsers(): RealmResults<UserRealm>
+    fun getFavoriteUsers(): Single<List<UserRealm>>
 
-    fun deleteFavoriteUser(login: String): Completable
+    fun deleteFavoriteUser(login: String): Single<List<UserRealm>>
 
-    fun makeFavorite(login: String)
+    fun makeFavorite(login: String): Completable
 }
 
 class UserDbSource : IUserDBSource {
-
 
     override fun getUser(login: String): Single<UserRealm> {
         lateinit var user: UserRealm
@@ -38,12 +37,16 @@ class UserDbSource : IUserDBSource {
         return Single.just(user)
     }
 
-    override fun deleteFavoriteUser(login: String) = Completable.fromAction {
+    override fun deleteFavoriteUser(login: String): Single<List<UserRealm>> {
+        var users: List<UserRealm>? = null
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction {
                 val rows = realm.where(UserRealm::class.java).equalTo("login", login).findAll()
                 rows.deleteFirstFromRealm()
+                users = realm.where(UserRealm::class.java).equalTo("isFavorite", true).findAll()
+
             }
+            return Single.just(users)
         }
     }
 
@@ -76,17 +79,17 @@ class UserDbSource : IUserDBSource {
         }
     }
 
-    override fun getFavoriteUsers(): RealmResults<UserRealm> {
-        lateinit var users: RealmResults<UserRealm>
+    override fun getFavoriteUsers(): Single<List<UserRealm>> {
+        var users: List<UserRealm>? = null
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
                 users = inRealm.where(UserRealm::class.java).equalTo("isFavorite", true).findAll()
             }
         }
-        return users
+        return Single.just(users)
     }
 
-    override fun makeFavorite(login: String) {
+    override fun makeFavorite(login: String) = Completable.fromAction {
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { inRealm ->
                 inRealm.where(UserRealm::class.java)

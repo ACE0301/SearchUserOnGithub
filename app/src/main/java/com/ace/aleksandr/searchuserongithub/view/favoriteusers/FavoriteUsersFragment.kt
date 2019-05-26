@@ -12,10 +12,10 @@ import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
 import io.realm.Realm
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_favorite_users.*
 
 class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
+
     private var mRealm: Realm? = null
 
     companion object {
@@ -50,8 +50,9 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
     }
 
 
-    override fun showFavoriteUsers(users: RealmResults<UserRealm>) {
-        mAdapter.data = users.map { it.login.toString() }
+    override fun showFavoriteUsers(users: List<UserRealm>) {
+        mAdapter.data = users.map { it.login.toString()
+        }
     }
 
     private fun openNewFragment(login: String) {
@@ -62,12 +63,10 @@ class FavoriteUsersFragment : Fragment(), FavoriteUsersView {
             ?.commit()
     }
 
+
+
     override fun showError(errorText: String) {
     }
-
-//    override fun removeUser() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//    }
 
     override fun onDestroy() {
         super.onDestroy()

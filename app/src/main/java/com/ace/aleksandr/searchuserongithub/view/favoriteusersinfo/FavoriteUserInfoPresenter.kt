@@ -1,6 +1,7 @@
 package com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
+import com.ace.aleksandr.searchuserongithub.base.disposeIfNotNull
 import com.ace.aleksandr.searchuserongithub.db.UserDbSource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -10,14 +11,14 @@ class FavoriteUserInfoPresenter(
     view: FavoriteUserInfoView,
     private val login: String
 ) : BasePresenter<FavoriteUserInfoView>(view) {
-    var disposable: Disposable? = null
+    private var disposableGetReposFromRealm: Disposable? = null
     override fun onCreate() {
         getReposFromRealm(login)
     }
 
     private fun getReposFromRealm(login: String) {
-        //disposable = view?.showUserInfo(UserDbSource().getUser(login))
-        disposable = UserDbSource().getUser(login)
+        disposableGetReposFromRealm.disposeIfNotNull()
+        disposableGetReposFromRealm = UserDbSource().getUser(login)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -29,6 +30,6 @@ class FavoriteUserInfoPresenter(
     }
 
     override fun onDestroy() {
-        disposable?.dispose()
+        disposableGetReposFromRealm?.dispose()
     }
 }

@@ -1,6 +1,7 @@
 package com.ace.aleksandr.searchuserongithub.view.favoriteusers
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
+import com.ace.aleksandr.searchuserongithub.base.disposeIfNotNull
 import com.ace.aleksandr.searchuserongithub.db.UserDbSource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -8,28 +9,42 @@ import io.reactivex.schedulers.Schedulers
 
 
 class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUsersView>(view) {
-    var disposable: Disposable? = null
+    var disposableGetUserFromRealm: Disposable? = null
+    var disposableRemoveUserFromRealm: Disposable? = null
 
     override fun onCreate() {
-        getUserFromRealm()
+        getUsersFromRealm()
     }
 
-    private fun getUserFromRealm() {
-        view?.showFavoriteUsers(UserDbSource().getFavoriteUsers())
+    private fun getUsersFromRealm() {
+        disposableGetUserFromRealm.disposeIfNotNull()
+        disposableGetUserFromRealm = UserDbSource().getFavoriteUsers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    view?.showFavoriteUsers(it)
+                }, {
+                    view?.showError("Ошибка!")
+                }
+
+            )
+        //UserDbSource().getFavoriteUsers()?.let { view?.showFavoriteUsers(it) }
     }
 
     fun onRemoveClick(login: String) {
-        disposable = UserDbSource().deleteFavoriteUser(login)
+        disposableRemoveUserFromRealm.disposeIfNotNull()
+        disposableRemoveUserFromRealm = UserDbSource().deleteFavoriteUser(login)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                view?.showFavoriteUsers(UserDbSource().getFavoriteUsers())
+                view?.showFavoriteUsers(it)
             }, {
-                view?.showError("Ошибка!")
+                view?.showError("Ошибка удаления!")
             })
     }
 
     override fun onDestroy() {
-        disposable?.dispose()
+        disposableRemoveUserFromRealm?.dispose()
     }
 }
