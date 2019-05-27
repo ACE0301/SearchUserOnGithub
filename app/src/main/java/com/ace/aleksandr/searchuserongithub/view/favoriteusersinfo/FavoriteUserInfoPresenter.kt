@@ -9,7 +9,8 @@ import io.reactivex.schedulers.Schedulers
 
 class FavoriteUserInfoPresenter(
     view: FavoriteUserInfoView,
-    private val login: String
+    private val login: String,
+    private val db: UserDbSource = UserDbSource()
 ) : BasePresenter<FavoriteUserInfoView>(view) {
     private var disposableGetReposFromRealm: Disposable? = null
     override fun onCreate() {
@@ -18,7 +19,7 @@ class FavoriteUserInfoPresenter(
 
     private fun getReposFromRealm(login: String) {
         disposableGetReposFromRealm.disposeIfNotNull()
-        disposableGetReposFromRealm = UserDbSource().getUser(login)
+        disposableGetReposFromRealm = db.getUser(login)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

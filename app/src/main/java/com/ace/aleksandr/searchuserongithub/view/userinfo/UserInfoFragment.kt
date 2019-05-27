@@ -14,8 +14,17 @@ import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
 import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
 import kotlinx.android.synthetic.main.fragment_user_info.*
+import kotlinx.android.synthetic.main.fragment_user_search.*
 
 class UserInfoFragment : Fragment(), UserInfoView {
+    override fun isShowLoading(status: Boolean) {
+        if (status) {
+            pbLoadingInfo.visibility = View.VISIBLE
+        } else {
+            pbLoadingInfo.visibility = View.INVISIBLE
+        }
+    }
+
 
     companion object {
         const val TAG = "UserInfoFragment"
@@ -72,6 +81,8 @@ class UserInfoFragment : Fragment(), UserInfoView {
 
     override fun showUserRepos(userRepos: List<UserRepo>) {
         mAdapter.data = userRepos.map { it.name ?: "отсутствует" }
+        rvUserInfoList?.scheduleLayoutAnimation()
+
     }
 
     override fun showResult(resultText: String) {

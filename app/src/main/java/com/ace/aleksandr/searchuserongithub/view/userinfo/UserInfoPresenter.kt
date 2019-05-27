@@ -44,6 +44,8 @@ class UserReposPresenter(
         disposableGetUserRepos = ApiHolder.service.getUserRepos(localLogin)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { view?.isShowLoading(true) }
+            .doFinally { view?.isShowLoading(false) }
             .subscribe({
                 view?.showUserRepos(it)
                 UserDbSource().saveRepositories(localLogin, it)

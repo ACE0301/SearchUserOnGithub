@@ -8,4 +8,5 @@ interface UserInfoView {
     fun showUser(user: GithubUser)
     fun showUserRepos(userRepos: List<UserRepo>)
     fun showResult(resultText: String)
+    fun isShowLoading(status: Boolean)
 }
