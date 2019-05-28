@@ -11,10 +11,11 @@ import io.reactivex.schedulers.Schedulers
 
 class UserReposPresenter(
     view: UserInfoView,
-    private val localLogin: String
+    private val localLogin: String,
+    private val db: UserDbSource = UserDbSource()
+
 ) : BasePresenter<UserInfoView>(view) {
 
-    //private var repositories: List<String>? = null
     private var disposableGetUser: Disposable? = null
     private var disposableGetUserRepos: Disposable? = null
     private var disposableSaveRepos: Disposable? = null
@@ -32,7 +33,7 @@ class UserReposPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.showUser(it)
-                UserDbSource().saveUser(it, localLogin)
+                db.saveUser(it, localLogin)
             }, {
                 view?.showResult(it.message ?: "")
 
@@ -48,7 +49,7 @@ class UserReposPresenter(
             .doFinally { view?.isShowLoading(false) }
             .subscribe({
                 view?.showUserRepos(it)
-                UserDbSource().saveRepositories(localLogin, it)
+                db.saveRepositories(localLogin, it)
             }, {
                 view?.showResult(it.message ?: "Ошибка!")
             })
@@ -56,7 +57,7 @@ class UserReposPresenter(
 
     fun saveRepos() {
         disposableSaveRepos.disposeIfNotNull()
-        disposableSaveRepos = UserDbSource().makeFavorite(localLogin)
+        disposableSaveRepos = db.makeFavorite(localLogin)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -67,7 +68,6 @@ class UserReposPresenter(
                 }
             )
     }
-
 
     override fun onDestroy() {
         disposableGetUser?.dispose()
