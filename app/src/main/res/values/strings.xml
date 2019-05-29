@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">SearchUserOnGithub</string>
+    <string name="app_name">Github User</string>
     <string name="bookmarks">Закладки</string>
     <string name="InputLogin">Введите имя пользователя</string>
     <string name="search">Поиск</string>
+    <string name="input_login">Введите логин</string>
 </resources>
