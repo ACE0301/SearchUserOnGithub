@@ -9,11 +9,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
 
-
 kapt {
     generateStubs = true
 }
-
 
 
 android {
