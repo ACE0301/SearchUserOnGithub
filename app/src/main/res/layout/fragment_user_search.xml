@@ -22,6 +22,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btnToFavoritesFromUserSearch"
             app:layout_constraintVertical_bias="0.0"/>
     <Button
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_gravity="right"
             android:text="@string/bookmarks"
             android:layout_width="wrap_content"
@@ -55,6 +56,7 @@
             android:textColor="@color/colorText"
             android:textColorHint="@color/colorText"/>
     <Button
+            style="@style/Widget.AppCompat.Button.Colored"
             android:id="@+id/btnSearch"
             android:text="@string/search"
             android:layout_width="wrap_content"
