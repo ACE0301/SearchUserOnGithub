@@ -15,12 +15,12 @@ class FavoriteUserInfoAdapter : RecyclerView.Adapter<FavoriteUserInfoAdapter.Ite
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ItemHolder =
-        ItemHolder(LayoutInflater.from(p0.context).inflate(R.layout.item_favorite_user_info, p0, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_favorite_user_info, parent, false))
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
+
+    override fun getItemCount() = data.size
+
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.bindData(data[position])

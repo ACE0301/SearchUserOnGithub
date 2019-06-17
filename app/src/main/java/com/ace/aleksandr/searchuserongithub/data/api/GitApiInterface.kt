@@ -19,5 +19,4 @@ interface GitApiInterface {
     @GET("/users/{username}/repos")
     fun getUserRepos(@Path("username") username: String): Single<List<UserRepo>>
 
-
 }

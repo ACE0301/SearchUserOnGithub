@@ -9,8 +9,9 @@ import io.reactivex.schedulers.Schedulers
 
 
 class FavoriteUsersPresenter(view: FavoriteUsersView) : BasePresenter<FavoriteUsersView>(view) {
-    var disposableGetUserFromRealm: Disposable? = null
-    var disposableRemoveUserFromRealm: Disposable? = null
+
+    private var disposableGetUserFromRealm: Disposable? = null
+    private var disposableRemoveUserFromRealm: Disposable? = null
 
     override fun onCreate() {
         getUsersFromRealm()

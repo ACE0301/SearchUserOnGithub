@@ -17,10 +17,12 @@ class UserSearchAdapter : RecyclerView.Adapter<UserSearchAdapter.ItemHolder>() {
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_user_search, parent, false))
 
-    override fun getItemCount(): Int = data.size
+
+    override fun getItemCount() = data.size
+
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.bindData(data[position])
@@ -28,9 +30,11 @@ class UserSearchAdapter : RecyclerView.Adapter<UserSearchAdapter.ItemHolder>() {
 
     inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(item: String) {
-            itemView.tvItem.text = item
-            itemView.tvItem.setOnClickListener {
-                onItemClickListener.invoke(item)
+            itemView.tvItem.apply {
+                text = item
+                setOnClickListener {
+                    onItemClickListener.invoke(item)
+                }
             }
         }
     }

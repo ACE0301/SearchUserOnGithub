@@ -17,16 +17,12 @@ class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.ItemHolde
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder =
-        ItemHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_favorite_users,
-                parent,
-                false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_favorite_users, parent, false))
 
-    override fun getItemCount(): Int = data.size
+
+    override fun getItemCount() = data.size
+
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.bindData(data[position])
@@ -41,9 +37,11 @@ class FavoriteUsersAdapter : RecyclerView.Adapter<FavoriteUsersAdapter.ItemHolde
         }
 
         fun bindData(item: String) {
-            itemView.tvItemFavoriteUsers.text = item
-            itemView.tvItemFavoriteUsers.setOnClickListener {
-                onItemClickListener.invoke(item)
+            itemView.tvItemFavoriteUsers.apply {
+                text = item
+                setOnClickListener {
+                    onItemClickListener.invoke(item)
+                }
             }
         }
     }
