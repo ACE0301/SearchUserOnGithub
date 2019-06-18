@@ -14,7 +14,6 @@ import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
 import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
 import kotlinx.android.synthetic.main.fragment_user_info.*
-import kotlinx.android.synthetic.main.fragment_user_search.*
 
 class UserInfoFragment : Fragment(), UserInfoView {
     override fun isShowLoading(status: Boolean) {

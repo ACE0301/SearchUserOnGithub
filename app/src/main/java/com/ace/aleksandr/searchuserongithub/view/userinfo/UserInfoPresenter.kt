@@ -20,10 +20,12 @@ class UserReposPresenter(
     private var disposableGetUserRepos: Disposable? = null
     private var disposableSaveRepos: Disposable? = null
 
-
-    override fun onCreate() {
+    init {
         getUser()
         getUserRepos()
+    }
+
+    override fun onCreate() {
     }
 
     private fun getUser() {
