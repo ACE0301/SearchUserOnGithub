@@ -1,34 +1,19 @@
-package com.ace.aleksandr.searchuserongithub.db
+package com.ace.aleksandr.searchuserongithub.repository
 
+import com.ace.aleksandr.searchuserongithub.base.realm.RealmProvider
+import com.ace.aleksandr.searchuserongithub.base.realm.createRealmProvider
 import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRealm
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
 import com.ace.aleksandr.searchuserongithub.model.UserRepository
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.realm.Realm
 
-
-interface IUserDBSource {
-
-    fun getUser(login: String): Single<UserRealm>
-
-    fun saveUser(user: GithubUser, localLogin: String)
-
-    fun saveRepositories(login: String?, repositories: List<UserRepo>)
-
-    fun getFavoriteUsers(): Single<List<UserRealm>>
-
-    fun deleteFavoriteUser(login: String): Single<List<UserRealm>>
-
-    fun makeFavorite(login: String): Completable
-}
-
-class UserDbSource : IUserDBSource {
-
+class UsersDataSource(private val realmProvider: RealmProvider = createRealmProvider()) : UsersRepository {
     override fun getUser(login: String): Single<UserRealm> {
         lateinit var user: UserRealm
-        Realm.getDefaultInstance().use { realm ->
+
+        realmProvider.realm.use { realm ->
             realm.executeTransaction { inRealm ->
                 user = inRealm.where(UserRealm::class.java).equalTo("login", login).findFirst()
                     ?: UserRealm()
@@ -39,7 +24,7 @@ class UserDbSource : IUserDBSource {
 
     override fun deleteFavoriteUser(login: String): Single<List<UserRealm>> {
         var users: List<UserRealm>? = null
-        Realm.getDefaultInstance().use { realm ->
+        realmProvider.realm.use { realm ->
             realm.executeTransaction {
                 val rows = realm.where(UserRealm::class.java).equalTo("login", login).findAll()
                 rows.deleteFirstFromRealm()
@@ -52,24 +37,24 @@ class UserDbSource : IUserDBSource {
 
 
     override fun saveUser(user: GithubUser, localLogin: String) {
-        Realm.getDefaultInstance()
-            .use { realmInstance ->
-                realmInstance.executeTransaction { realm ->
-                    val thisUser = realm.where(UserRealm::class.java)
-                        .equalTo("login", localLogin).findFirst()
-                    realm.insertOrUpdate(UserRealm().apply
+        realmProvider.realm.use { realmInstance ->
+            realmInstance.executeTransaction { realm ->
+                val thisUser = realm.where(UserRealm::class.java)
+                    .equalTo("login", localLogin).findFirst()
+                realm.insertOrUpdate(
+                    UserRealm().apply
                     {
                         login = localLogin
                         name = user.name
                         location = user.location
                         isFavorite = thisUser?.isFavorite ?: false
                     })
-                }
             }
+        }
     }
 
     override fun saveRepositories(login: String?, repositories: List<UserRepo>) {
-        Realm.getDefaultInstance().use { realm ->
+        realmProvider.realm.use { realm ->
             realm.executeTransaction { inRealm ->
                 val users = inRealm.where(UserRealm::class.java).equalTo("login", login).findFirst()
                 realm.insertOrUpdate(UserRealm().apply {
@@ -81,7 +66,7 @@ class UserDbSource : IUserDBSource {
 
     override fun getFavoriteUsers(): Single<List<UserRealm>> {
         var users: List<UserRealm>? = null
-        Realm.getDefaultInstance().use { realm ->
+        realmProvider.realm.use { realm ->
             realm.executeTransaction { inRealm ->
                 users = inRealm.where(UserRealm::class.java).equalTo("isFavorite", true).findAll()
             }
@@ -90,7 +75,7 @@ class UserDbSource : IUserDBSource {
     }
 
     override fun makeFavorite(login: String) = Completable.fromAction {
-        Realm.getDefaultInstance().use { realm ->
+        realmProvider.realm.use { realm ->
             realm.executeTransaction { inRealm ->
                 inRealm.where(UserRealm::class.java)
                     .equalTo(UserRealm.LOGIN, login)

@@ -3,6 +3,7 @@ package com.ace.aleksandr.searchuserongithub.view.usersearch
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.base.disposeIfNotNull
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
+import com.ace.aleksandr.searchuserongithub.repository.UsersRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

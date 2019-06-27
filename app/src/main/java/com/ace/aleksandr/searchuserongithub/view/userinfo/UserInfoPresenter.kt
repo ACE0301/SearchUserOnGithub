@@ -3,7 +3,8 @@ package com.ace.aleksandr.searchuserongithub.view.userinfo
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.base.disposeIfNotNull
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
-import com.ace.aleksandr.searchuserongithub.db.UserDbSource
+import com.ace.aleksandr.searchuserongithub.repository.UsersDataSource
+import com.ace.aleksandr.searchuserongithub.repository.UsersRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -12,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 class UserReposPresenter(
     view: UserInfoView,
     private val localLogin: String,
-    private val db: UserDbSource = UserDbSource()
+    private val repository: UsersRepository = UsersDataSource()
 
 ) : BasePresenter<UserInfoView>(view) {
 
@@ -35,7 +36,7 @@ class UserReposPresenter(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 view?.showUser(it)
-                db.saveUser(it, localLogin)
+                repository.saveUser(it, localLogin)
             }, {
                 view?.showResult(it.message ?: "")
 
@@ -51,7 +52,7 @@ class UserReposPresenter(
             .doFinally { view?.isShowLoading(false) }
             .subscribe({
                 view?.showUserRepos(it)
-                db.saveRepositories(localLogin, it)
+                repository.saveRepositories(localLogin, it)
             }, {
                 view?.showResult(it.message ?: "Ошибка!")
             })
@@ -59,7 +60,7 @@ class UserReposPresenter(
 
     fun saveRepos() {
         disposableSaveRepos.disposeIfNotNull()
-        disposableSaveRepos = db.makeFavorite(localLogin)
+        disposableSaveRepos = repository.makeFavorite(localLogin)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
