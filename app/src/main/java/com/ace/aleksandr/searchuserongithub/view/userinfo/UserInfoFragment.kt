@@ -2,7 +2,6 @@ package com.ace.aleksandr.searchuserongithub.view.userinfo
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,23 +10,13 @@ import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
-import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
-import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
+import com.ace.aleksandr.searchuserongithub.view.UserView
 import kotlinx.android.synthetic.main.fragment_user_info.*
 
 class UserInfoFragment : Fragment(), UserInfoView {
-    override fun isShowLoading(status: Boolean) {
-        if (status) {
-            pbLoadingInfo.visibility = View.VISIBLE
-        } else {
-            pbLoadingInfo.visibility = View.INVISIBLE
-        }
-    }
-
 
     companion object {
         const val TAG = "UserInfoFragment"
-
         private const val ARGUMENT_USER_LOGIN = "ARGUMENT_USER_LOGIN"
 
         fun newInstance(userLogin: String) = UserInfoFragment().apply {
@@ -61,16 +50,8 @@ class UserInfoFragment : Fragment(), UserInfoView {
 
 
         btnToFavoritesFromUserInfo.setOnClickListener {
-            openFavoriteUsersFragment()
+            (activity as? UserView)?.openFavoritesFragment()
         }
-    }
-
-    private fun openFavoriteUsersFragment() {
-        fragmentManager?.beginTransaction()
-            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUserInfoFragment.TAG))
-            ?.addToBackStack(FavoriteUserInfoFragment.TAG)
-            ?.commit()
     }
 
     override fun showUser(user: GithubUser) {
@@ -86,5 +67,13 @@ class UserInfoFragment : Fragment(), UserInfoView {
 
     override fun showResult(resultText: String) {
         Toast.makeText(activity, resultText, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun isShowLoading(status: Boolean) {
+        if (status) {
+            pbLoadingInfo.visibility = View.VISIBLE
+        } else {
+            pbLoadingInfo.visibility = View.INVISIBLE
+        }
     }
 }

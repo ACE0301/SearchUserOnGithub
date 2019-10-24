@@ -1,7 +1,6 @@
 package com.ace.aleksandr.searchuserongithub.view.userinfo
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
-import com.ace.aleksandr.searchuserongithub.base.disposeIfNotNull
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
 import com.ace.aleksandr.searchuserongithub.repository.UsersDataSource
 import com.ace.aleksandr.searchuserongithub.repository.UsersRepository
@@ -30,7 +29,7 @@ class UserReposPresenter(
     }
 
     private fun getUser() {
-        disposableGetUser.disposeIfNotNull()
+        disposableGetUser?.dispose()
         disposableGetUser = ApiHolder.service.getUser(localLogin)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -44,7 +43,7 @@ class UserReposPresenter(
     }
 
     private fun getUserRepos() {
-        disposableGetUserRepos.disposeIfNotNull()
+        disposableGetUserRepos?.dispose()
         disposableGetUserRepos = ApiHolder.service.getUserRepos(localLogin)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -59,7 +58,7 @@ class UserReposPresenter(
     }
 
     fun saveRepos() {
-        disposableSaveRepos.disposeIfNotNull()
+        disposableSaveRepos?.dispose()
         disposableSaveRepos = repository.makeFavorite(localLogin)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

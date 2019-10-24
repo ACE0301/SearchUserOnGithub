@@ -4,7 +4,6 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-
 open class UserRealm(
     @PrimaryKey
     var login: String? = null,
@@ -13,7 +12,6 @@ open class UserRealm(
     var location: String? = null,
     var listOfRepos: RealmList<UserRepository>? = null
 ) : RealmObject() {
-
     companion object {
         const val LOGIN = "login"
     }

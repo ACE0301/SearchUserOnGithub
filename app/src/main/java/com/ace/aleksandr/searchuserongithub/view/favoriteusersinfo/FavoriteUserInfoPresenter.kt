@@ -1,7 +1,6 @@
 package com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
-import com.ace.aleksandr.searchuserongithub.base.disposeIfNotNull
 import com.ace.aleksandr.searchuserongithub.repository.UsersDataSource
 import com.ace.aleksandr.searchuserongithub.repository.UsersRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,7 +18,7 @@ class FavoriteUserInfoPresenter(
     }
 
     private fun getReposFromRealm(login: String) {
-        disposableGetReposFromRealm.disposeIfNotNull()
+        disposableGetReposFromRealm?.dispose()
         disposableGetReposFromRealm = repository.getUser(login)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

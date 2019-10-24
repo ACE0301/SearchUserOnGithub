@@ -6,9 +6,8 @@ package com.ace.aleksandr.searchuserongithub.model
  *
  * **/
 
-
 data class GithubUser(
-    var name: String? = null,
-    var location: String? = null
+    val name: String?,
+    val location: String?
 )
 

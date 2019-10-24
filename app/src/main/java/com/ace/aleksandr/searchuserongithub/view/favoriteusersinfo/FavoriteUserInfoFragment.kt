@@ -14,10 +14,8 @@ import kotlinx.android.synthetic.main.fragment_favorite_user_info.*
 
 class FavoriteUserInfoFragment : Fragment(), FavoriteUserInfoView {
 
-
     companion object {
         const val TAG = "FavoriteUserInfoFragment"
-
         private const val ARGUMENT_USER_LOGIN = "ARGUMENT_USER_LOGIN"
 
         fun newInstance(userLogin: String) = FavoriteUserInfoFragment().apply {
@@ -27,7 +25,8 @@ class FavoriteUserInfoFragment : Fragment(), FavoriteUserInfoView {
         }
     }
 
-    private val presenter by lazy { FavoriteUserInfoPresenter(this, arguments?.getString(ARGUMENT_USER_LOGIN) ?: "") }
+    private val presenter by lazy {
+        FavoriteUserInfoPresenter(this, arguments?.getString(ARGUMENT_USER_LOGIN) ?: "") }
     private val mAdapter = FavoriteUserInfoAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =

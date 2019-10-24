@@ -2,7 +2,6 @@ package com.ace.aleksandr.searchuserongithub.view.usersearch
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.GithubUserInfoSearchResult
-import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
-import com.ace.aleksandr.searchuserongithub.view.userinfo.UserInfoFragment
+import com.ace.aleksandr.searchuserongithub.view.UserView
 import kotlinx.android.synthetic.main.fragment_user_search.*
 
 class UserSearchFragment : Fragment(), UserSearchView {
@@ -47,18 +45,13 @@ class UserSearchFragment : Fragment(), UserSearchView {
             }
         }
         mAdapter.onItemClickListener = {
-            openNewFragment(it)
+            (activity as? UserView)?.openNewFragment(it)
         }
         pbLoading.isIndeterminate = true
 
         btnToFavoritesFromUserSearch.setOnClickListener {
-            openFavoritesFragment()
+            (activity as? UserView)?.openFavoritesFragment()
         }
-    }
-
-    override fun onDestroyView() {
-        presenter.onDestroy()
-        super.onDestroyView()
     }
 
     override fun showError(errorText: String) {
@@ -72,28 +65,17 @@ class UserSearchFragment : Fragment(), UserSearchView {
         rvList.scheduleLayoutAnimation()
     }
 
-    private fun openNewFragment(login: String) {
-        fragmentManager?.beginTransaction()
-            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            ?.replace(R.id.content, UserInfoFragment.newInstance(login), UserInfoFragment.TAG)
-            ?.addToBackStack(UserInfoFragment.TAG)
-            ?.commit()
-    }
-
-    private fun openFavoritesFragment() {
-        fragmentManager?.beginTransaction()
-            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            ?.replace(R.id.content, FavoriteUsersFragment.newInstance(FavoriteUsersFragment.TAG))
-            ?.addToBackStack(FavoriteUsersFragment.TAG)
-            ?.commit()
-    }
-
     override fun isShowLoading(status: Boolean) {
         if (status) {
             pbLoading.visibility = View.VISIBLE
         } else {
             pbLoading.visibility = View.INVISIBLE
         }
+    }
+
+    override fun onDestroyView() {
+        presenter.onDestroy()
+        super.onDestroyView()
     }
 
 }

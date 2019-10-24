@@ -1,7 +1,6 @@
 package com.ace.aleksandr.searchuserongithub.view.favoriteusers
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
-import com.ace.aleksandr.searchuserongithub.base.disposeIfNotNull
 import com.ace.aleksandr.searchuserongithub.repository.UsersDataSource
 import com.ace.aleksandr.searchuserongithub.repository.UsersRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +21,7 @@ class FavoriteUsersPresenter(
     }
 
     private fun getUsersFromRealm() {
-        disposableGetUserFromRealm.disposeIfNotNull()
+        disposableGetUserFromRealm?.dispose()
         disposableGetUserFromRealm = repository.getFavoriteUsers()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -32,13 +31,11 @@ class FavoriteUsersPresenter(
                 }, {
                     view?.showError("Ошибка!")
                 }
-
             )
-        //UserDbSource().getFavoriteUsers()?.let { view?.showFavoriteUsers(it) }
     }
 
     fun onRemoveClick(login: String) {
-        disposableRemoveUserFromRealm.disposeIfNotNull()
+        disposableRemoveUserFromRealm?.dispose()
         disposableRemoveUserFromRealm = repository.deleteFavoriteUser(login)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
