@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical">
-    <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_of_item"
-            android:orientation="vertical"
-            app:cardBackgroundColor="@color/colorPrimary">
+        android:layout_height="@dimen/height_of_item"
+        android:orientation="vertical"
+        app:cardBackgroundColor="@color/colorPrimary">
+
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
             <TextView
-                    android:id="@+id/tvItemFavoriteUserInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Medium Text"
-                    android:layout_marginStart="@dimen/spacing_small_8"
-                    android:textColor="@color/colorText"
-                    android:fontFamily="@font/roboto"
-                    android:textSize="@dimen/font_normal_18"/>
+                android:id="@+id/tvItemFavoriteUserInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small_8"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/font_normal_18"
+                tools:text="Medium Text" />
         </RelativeLayout>
+
         <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/devider_2"
-                android:background="@color/colorPrimaryDark"/>
-    </android.support.v7.widget.CardView>
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/devider_2"
+            android:background="@color/colorPrimaryDark" />
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

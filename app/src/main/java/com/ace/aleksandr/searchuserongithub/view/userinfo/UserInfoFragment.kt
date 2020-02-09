@@ -1,12 +1,12 @@
 package com.ace.aleksandr.searchuserongithub.view.userinfo
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.model.GithubUser
 import com.ace.aleksandr.searchuserongithub.model.UserRepo
@@ -27,9 +27,18 @@ class UserInfoFragment : Fragment(), UserInfoView {
     }
 
     private val mAdapter = UserInfoAdapter()
-    private val presenter by lazy { UserReposPresenter(this, arguments?.getString(ARGUMENT_USER_LOGIN) ?: "") }
+    private val presenter by lazy {
+        UserReposPresenter(
+            this,
+            arguments?.getString(ARGUMENT_USER_LOGIN) ?: ""
+        )
+    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.fragment_user_info, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -55,7 +64,8 @@ class UserInfoFragment : Fragment(), UserInfoView {
     }
 
     override fun showUser(user: GithubUser) {
-        val userInfo = "Имя пользователя ${user.name ?: "не указано"}, город: ${user.location ?: "не указан"}"
+        val userInfo =
+            "Имя пользователя ${user.name ?: "не указано"}, город: ${user.location ?: "не указан"}"
         tvUserLastName?.text = userInfo
     }
 

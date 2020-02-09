@@ -2,8 +2,8 @@ package com.ace.aleksandr.searchuserongithub.view.userinfo
 
 import com.ace.aleksandr.searchuserongithub.base.BasePresenter
 import com.ace.aleksandr.searchuserongithub.data.api.ApiHolder
-import com.ace.aleksandr.searchuserongithub.repository.UsersDataSource
-import com.ace.aleksandr.searchuserongithub.repository.UsersRepository
+import com.ace.aleksandr.searchuserongithub.model.repository.UsersDataSource
+import com.ace.aleksandr.searchuserongithub.model.repository.UsersRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

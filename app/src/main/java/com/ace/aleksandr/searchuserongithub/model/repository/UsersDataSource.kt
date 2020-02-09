@@ -1,4 +1,4 @@
-package com.ace.aleksandr.searchuserongithub.repository
+package com.ace.aleksandr.searchuserongithub.model.repository
 
 import com.ace.aleksandr.searchuserongithub.base.realm.RealmProvider
 import com.ace.aleksandr.searchuserongithub.base.realm.createRealmProvider

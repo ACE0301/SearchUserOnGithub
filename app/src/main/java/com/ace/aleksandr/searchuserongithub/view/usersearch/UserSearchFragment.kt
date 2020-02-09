@@ -1,54 +1,53 @@
 package com.ace.aleksandr.searchuserongithub.view.usersearch
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ace.aleksandr.searchuserongithub.R
-import com.ace.aleksandr.searchuserongithub.model.GithubUserInfoSearchResult
+import com.ace.aleksandr.searchuserongithub.model.searchuser.data.UsersPresModel
 import com.ace.aleksandr.searchuserongithub.view.UserView
 import kotlinx.android.synthetic.main.fragment_user_search.*
+
 
 class UserSearchFragment : Fragment(), UserSearchView {
 
     companion object {
-        const val TAG = "UserSearchFragment"
-
         fun newInstance() = UserSearchFragment()
+        const val LOGIN = "LOGIN"
+        var login = ""
     }
 
     private val presenter by lazy { UserSearchPresenter(this) }
-    private val mAdapter = UserSearchAdapter()
+    private val mAdapter by lazy { UserSearchAdapter() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_user_search, container, false)
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        presenter.onCreate()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        if (savedInstanceState?.getString(LOGIN) != null) {
+            login = savedInstanceState.getString(LOGIN).orEmpty()
+        }
+        return inflater.inflate(R.layout.fragment_user_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvList.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = mAdapter
-        }
+        if (login.isNotEmpty()) etSearch.setText(login)
+        rvUsers.layoutManager = LinearLayoutManager(context)
+        rvUsers.adapter = mAdapter
+        presenter.onCreate()
+
         btnSearch.setOnClickListener {
-            if (etSearch.text.isEmpty()) {
-                etSearch.error = "Логин не может быть пустой!"
-            } else {
-                presenter.getUserInfo(etSearch.text.toString())
-            }
+            presenter.getUserInfo(etSearch.text.toString())
         }
         mAdapter.onItemClickListener = {
             (activity as? UserView)?.openNewFragment(it)
         }
-        pbLoading.isIndeterminate = true
-
         btnToFavoritesFromUserSearch.setOnClickListener {
             (activity as? UserView)?.openFavoritesFragment()
         }
@@ -58,11 +57,17 @@ class UserSearchFragment : Fragment(), UserSearchView {
         Toast.makeText(activity, errorText, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showUserInfo(userSearchResult: GithubUserInfoSearchResult) {
-        val quantityText = "Найдено ${userSearchResult.total_count} пользователей"
-        tvQuantity.text = quantityText
-        mAdapter.data = userSearchResult.items.map { it.login }
-        rvList.scheduleLayoutAnimation()
+    override fun showUserInfo(userSearchResult: UsersPresModel) {
+        tvQuantity.text = userSearchResult.total_count
+        mAdapter.setData(userSearchResult.logins)
+        rvUsers.scheduleLayoutAnimation()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (etSearch != null) {
+            outState.putString(LOGIN, etSearch.text.toString())
+        }
     }
 
     override fun isShowLoading(status: Boolean) {
@@ -77,5 +82,4 @@ class UserSearchFragment : Fragment(), UserSearchView {
         presenter.onDestroy()
         super.onDestroyView()
     }
-
 }

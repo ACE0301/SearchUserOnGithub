@@ -1,67 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorPrimaryDark">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
     <ProgressBar
-            android:id="@+id/pbLoadingInfo"
-            android:layout_width="match_parent"
-            android:indeterminate="true"
-            android:visibility="invisible"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_height="@dimen/height_of_progress_bar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btnToFavoritesFromUserSearch"/>
+        android:id="@+id/pbLoadingInfo"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_of_progress_bar"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-            android:id="@+id/btnToFavoritesFromUserInfo"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_gravity="right"
-            android:text="@string/bookmarks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_small_8"
-            android:layout_marginTop="@dimen/spacing_normal_16"
-            android:layout_marginBottom="@dimen/spacing_small_8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/etSearch"/>
+        android:id="@+id/btnToFavoritesFromUserInfo"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/spacing_normal_16"
+        android:layout_marginEnd="@dimen/spacing_small_8"
+        android:text="@string/bookmarks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-            android:id="@+id/tvUserLastName"
-            tools:text="info"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_small_8"
-            android:layout_marginEnd="@dimen/spacing_small_8"
-            android:layout_marginTop="@dimen/spacing_small_8"
-            android:textColor="@color/colorText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_goneMarginStart="@dimen/spacing_small_8"
-            app:layout_constraintTop_toBottomOf="@+id/btnToFavoritesFromUserInfo"/>
-    <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fabSave"
-            android:visibility="visible"
-            android:layout_marginBottom="@dimen/spacing_normal_16"
-            android:layout_marginEnd="@dimen/spacing_normal_16"
-            app:backgroundTint="@color/colorAccent"
-            app:maxImageSize="@dimen/image_size_fab_35"
-            app:srcCompat="@android:drawable/btn_star_big_on"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvUserInfoList"
-            android:layout_width="match_parent"
-            android:layoutAnimation="@anim/layout_animation_fall_down"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_normal_16"
-            app:layout_constraintTop_toBottomOf="@+id/tvUserLastName"/>
+        android:id="@+id/tvUserLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/spacing_small_8"
+        android:layout_marginTop="@dimen/spacing_small_8"
+        android:layout_marginEnd="@dimen/spacing_small_8"
+        android:textColor="@color/colorText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnToFavoritesFromUserInfo"
+        app:layout_goneMarginStart="@dimen/spacing_small_8"
+        tools:text="info" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUserInfoList"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal_16"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserLastName" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_normal_16"
+        android:layout_marginBottom="@dimen/spacing_normal_16"
+        android:visibility="visible"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="@dimen/image_size_fab_35"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
 </android.support.constraint.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.ace.aleksandr.searchuserongithub.view
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.ace.aleksandr.searchuserongithub.R
 import com.ace.aleksandr.searchuserongithub.view.favoriteusers.FavoriteUsersFragment
 import com.ace.aleksandr.searchuserongithub.view.favoriteusersinfo.FavoriteUserInfoFragment
@@ -19,17 +19,14 @@ class MainActivity : AppCompatActivity(), UserView {
 
     private fun showSearchFragment() {
         supportFragmentManager.beginTransaction()
-            .add(
-                R.id.content,
-                UserSearchFragment.newInstance()
-            )
+            .replace(R.id.container, UserSearchFragment.newInstance())
             .commit()
     }
 
     override fun openFavoritesFragment() {
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.content,
+                R.id.container,
                 FavoriteUsersFragment.newInstance()
             )
             .addToBackStack(FavoriteUsersFragment.TAG)
@@ -40,7 +37,7 @@ class MainActivity : AppCompatActivity(), UserView {
     override fun openNewFragment(login: String) {
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.content,
+                R.id.container,
                 UserInfoFragment.newInstance(login)
             )
             .addToBackStack(UserInfoFragment.TAG)
@@ -50,7 +47,7 @@ class MainActivity : AppCompatActivity(), UserView {
     override fun openFavoriteUserInfoFragment(login: String) {
         supportFragmentManager.beginTransaction()
             .replace(
-                R.id.content,
+                R.id.container,
                 FavoriteUserInfoFragment.newInstance(login),
                 FavoriteUserInfoFragment.TAG
             )
